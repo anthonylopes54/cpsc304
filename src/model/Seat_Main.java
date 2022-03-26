@@ -1,11 +1,11 @@
 package model;
 
-public class Seat_MainInfo {
+public class Seat_Main {
     private final int seatNum;
     private final int trainID;
     private final String class_;
 
-    public Seat_MainInfo(int seatNum, int trainID, String class_) {
+    public Seat_Main(int seatNum, int trainID, String class_) {
         this.seatNum = seatNum;
         this.trainID = trainID;
         this.class_ = class_;
