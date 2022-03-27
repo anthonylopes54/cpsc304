@@ -1,6 +1,6 @@
 package constants;
 
-public enum modelType {
+public enum ModelType {
     DRIVES,
     EMPLOYEE,
     MANAGES,
