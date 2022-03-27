@@ -1,6 +1,8 @@
 package models;
 
-public class Manages {
+import constants.ModelType;
+
+public class Manages extends Model {
 
     private final int empID;
     private final int trainID;
@@ -8,6 +10,7 @@ public class Manages {
     public Manages(int empID, int trainID) {
         this.empID = empID;
         this.trainID = trainID;
+        this.type = ModelType.MANAGES;
     }
     public int getEmpID() {
         return empID;

@@ -1,12 +1,15 @@
 package models;
 
-public class Passenger {
+import constants.ModelType;
+
+public class Passenger extends Model {
     private final int passengerID;
     private final String name;
 
     public Passenger(int passengerID, String name) {
         this.passengerID = passengerID;
         this.name = name;
+        this.type = ModelType.PASSENGER;
     }
 
     public int getPassengerID() {

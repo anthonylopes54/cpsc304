@@ -1,6 +1,8 @@
 package models;
 
-public class Train_Extra {
+import constants.ModelType;
+
+public class Train_Extra extends Model {
     private final String model;
     private final int trainId;
     private final int numSeats;
@@ -11,6 +13,7 @@ public class Train_Extra {
         this.trainId = trainId;
         this.numSeats = numSeats;
         this.numCars = numCars;
+        this.type = ModelType.TRAIN_EXTRA;
     }
 
     public String getModel() {

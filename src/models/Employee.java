@@ -1,8 +1,10 @@
 package models;
 
+import constants.ModelType;
+
 import java.util.Date;
 
-public class Employee {
+public class Employee extends Model{
     private final int empID;
     private final String name;
     private final Date date;
@@ -29,6 +31,7 @@ public class Employee {
         this.licenseExpiryDate = licenseExpiryDate;
         this.licenseNumber = licenseNumber;
         this.certificationIssueDate = certificationIssueDate;
+        this.type = ModelType.EMPLOYEE;
     }
 
     public int getEmpID() {

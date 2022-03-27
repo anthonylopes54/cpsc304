@@ -1,6 +1,8 @@
 package database;
 
 import constants.ModelType;
+import models.Drives;
+import models.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,7 +39,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void delete(ModelType type) {
+    public void delete(ModelType type, int id) {
         switch (type) {
             case DRIVES -> {
 
@@ -90,8 +92,8 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void insert(ModelType type) {
-        switch (type) {
+    public void insert(Model model) {
+        switch (model.type) {
             case DRIVES -> {
 
             }
@@ -143,7 +145,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void get(ModelType type) {
+    public Model[] getInfo(ModelType type) {
         switch (type) {
             case DRIVES -> {
 
@@ -194,10 +196,11 @@ public class DatabaseConnectionHandler {
                 // no-op
             }
         }
+        return null;
     }
 
-    public void update(ModelType type) {
-        switch (type) {
+    public void update(Model modal, int id) {
+        switch (modal.type) {
             case DRIVES -> {
 
             }
