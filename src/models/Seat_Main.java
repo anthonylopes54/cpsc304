@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class Seat_Main {
     private final int seatNum;
