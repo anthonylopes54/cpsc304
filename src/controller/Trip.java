@@ -1,2 +1,4 @@
-package controller;public class Trip {
+package controller;
+
+public class Trip {
 }

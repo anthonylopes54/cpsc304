@@ -1,6 +1,8 @@
 package models;
 
-public class Drives {
+import constants.ModelType;
+
+public class Drives extends Model{
 
     private final int empID;
     private final int trainID;
@@ -8,6 +10,7 @@ public class Drives {
     public Drives(int empID, int trainID) {
         this.empID = empID;
         this.trainID = trainID;
+        this.type = ModelType.DRIVES;
     }
 
     public int getEmpID() {

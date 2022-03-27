@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class Cargo_BelongsTo {
     private final int passengerID;

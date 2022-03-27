@@ -1,6 +1,8 @@
 package models;
 
-public class Train_MainInfo {
+import constants.ModelType;
+
+public class Train_MainInfo extends Model {
 
     private final int trainID;
     private final String model;
@@ -10,6 +12,7 @@ public class Train_MainInfo {
         this.trainID = trainID;
         this.model = model;
         this.manufactureYear = manufactureYear;
+        this.type = ModelType.TRAIN_MAIN_INFO;
     }
 
     public int getTrainID() {
