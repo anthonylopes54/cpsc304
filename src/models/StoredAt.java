@@ -1,12 +1,15 @@
 package models;
 
-public class StoredAt {
+import constants.ModelType;
+
+public class StoredAt extends Model {
     private final int trainID;
     private final String stationName;
 
     public StoredAt(int trainID, String stationName) {
         this.trainID = trainID;
         this.stationName = stationName;
+        this.type = ModelType.STORED_AT;
     }
 
     public int getTrainID() {

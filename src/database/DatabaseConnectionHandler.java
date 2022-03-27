@@ -1,14 +1,11 @@
 package database;
 
 import constants.ModelType;
-import models.Drives;
 import models.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DatabaseConnectionHandler {
 
@@ -77,7 +74,7 @@ public class DatabaseConnectionHandler {
             case TRAIN_EXTRA -> {
 
             }
-            case TRAIN_MAIN_INFO -> {
+            case TRAIN_MAIN -> {
 
             }
             case GOES_THROUGH -> {
@@ -130,7 +127,7 @@ public class DatabaseConnectionHandler {
             case TRAIN_EXTRA -> {
 
             }
-            case TRAIN_MAIN_INFO -> {
+            case TRAIN_MAIN -> {
 
             }
             case GOES_THROUGH -> {
@@ -183,7 +180,7 @@ public class DatabaseConnectionHandler {
             case TRAIN_EXTRA -> {
 
             }
-            case TRAIN_MAIN_INFO -> {
+            case TRAIN_MAIN -> {
 
             }
             case GOES_THROUGH -> {
@@ -237,7 +234,7 @@ public class DatabaseConnectionHandler {
             case TRAIN_EXTRA -> {
 
             }
-            case TRAIN_MAIN_INFO -> {
+            case TRAIN_MAIN -> {
 
             }
             case GOES_THROUGH -> {

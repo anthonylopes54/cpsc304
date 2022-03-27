@@ -2,7 +2,7 @@ package database;
 
 import models.Model;
 
-public class DrivesHandler implements ModelHandler{
+public class Train_MainHandler implements ModelHandler {
     @Override
     public void insert(Model model) {
 

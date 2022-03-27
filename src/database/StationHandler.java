@@ -1,15 +1,16 @@
 package database;
 
 import models.Model;
+import models.Station;
 
-public class Train_MainInfoHandler implements ModelHandler {
+public class StationHandler implements ModelHandler {
     @Override
-    public void Insert(Model modal) {
-
+    public void insert(Model model) {
+        model = (Station) model;
     }
 
     @Override
-    public void update(Model modal, int id) {
+    public void update(Model model, int id) {
 
     }
 

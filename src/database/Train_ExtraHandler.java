@@ -4,12 +4,12 @@ import models.Model;
 
 public class Train_ExtraHandler implements ModelHandler {
     @Override
-    public void Insert(Model modal) {
+    public void insert(Model model) {
 
     }
 
     @Override
-    public void update(Model modal, int id) {
+    public void update(Model model, int id) {
 
     }
 

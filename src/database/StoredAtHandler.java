@@ -2,7 +2,7 @@ package database;
 
 import models.Model;
 
-public class DrivesHandler implements ModelHandler{
+public class StoredAtHandler implements ModelHandler {
     @Override
     public void insert(Model model) {
 
