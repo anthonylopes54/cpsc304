@@ -248,4 +248,24 @@ public class DatabaseConnectionHandler {
             }
         }
     }
+
+    public void rollbackConnection() {
+        try  {
+            connection.rollback();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public static String getExceptionTag() {
+        return EXCEPTION_TAG;
+    }
+
+    public static String getWarningTag() {
+        return WARNING_TAG;
+    }
 }
