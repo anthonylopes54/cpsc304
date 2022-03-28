@@ -1,5 +1,6 @@
 package database;
-import models.Manages;
+
+import models.Cargo_BelongsTo;
 import models.Model;
 import util.Constants;
 
@@ -9,16 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ManagesHandler implements ModelHandler {
-
+public class Cargo_BelongsToHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "INSERT INTO Manages VALUES (?,?)";
+        Cargo_BelongsTo cbt = (Cargo_BelongsTo) model;
+        String query = "INSERT INTO Cargo_BelongsTo VALUES (?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getEmpID());
-            ps.setInt(2, manages.getTrainID());
+            ps.setInt(1, cbt.getPassengerID());
+            ps.setInt(2, cbt.getCargoID());
+            ps.setInt(3, cbt.getWeight());
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -28,18 +29,21 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public void update(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "UPDATE Manages SET trainID = ? WHERE empID = ?";
+        Cargo_BelongsTo cbt = (Cargo_BelongsTo) model;
+        String query = "UPDATE Cargo_BelongsTo SET weight = ? WHERE passengerID = ? AND cargoID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getTrainID());
-            ps.setInt(2, manages.getEmpID());
+            ps.setInt(1, cbt.getWeight());
+            ps.setInt(2, cbt.getPassengerID());
+            ps.setInt(3, cbt.getCargoID());
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Manages {empID: " +
-                                manages.getEmpID() +
+                                " Cargo_BelongsTo {empID: " +
+                                cbt.getPassengerID() +
+                                "; trainID: " +
+                                cbt.getCargoID() +
                                 "} does not exist!"
                 );
             }
@@ -52,17 +56,20 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public void delete(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "DELETE FROM Manages WHERE empID = ?";
+        Cargo_BelongsTo cbt = (Cargo_BelongsTo) model;
+        String query = "DELETE FROM Cargo_BelongsTo WHERE passengerID = ? AND cargoID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getEmpID());
+            ps.setInt(1, cbt.getPassengerID());
+            ps.setInt(2, cbt.getCargoID());
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Manages {empID: " +
-                                manages.getEmpID() +
+                                " Cargo_BelongsTo {empID: " +
+                                cbt.getPassengerID() +
+                                "; trainID: " +
+                                cbt.getCargoID() +
                                 "} does not exist!"
                 );
             }
@@ -74,24 +81,25 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        ArrayList<Manages> res = new ArrayList<>();
-        String query = "SELECT * FROM Manages";
+        ArrayList<Cargo_BelongsTo> res = new ArrayList<>();
+        String query = "SELECT * FROM Cargo_BelongsTo";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();
 
             while(resultSet.next()) {
-                Manages manages = new Manages(
-                        Integer.parseInt(resultSet.getString("empID")),
-                        Integer.parseInt(resultSet.getString("trainID"))
+                Cargo_BelongsTo cargo_belongsTo = new Cargo_BelongsTo(
+                        Integer.parseInt(resultSet.getString("passengerID")),
+                        Integer.parseInt(resultSet.getString("cargoID")),
+                        Integer.parseInt(resultSet.getString("weight"))
                 );
-                res.add(manages);
+                res.add(cargo_belongsTo);
             }
             resultSet.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-        return res.toArray(new Manages[0]);
+        return res.toArray(new Cargo_BelongsTo[0]);
     }
 }

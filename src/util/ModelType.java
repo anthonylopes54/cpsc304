@@ -1,4 +1,4 @@
-package constants;
+package util;
 
 public enum ModelType {
     DRIVES,
