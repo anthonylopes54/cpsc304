@@ -28,6 +28,30 @@ public class ManagesHandler implements ModelHandler {
     @Override
     public void update(Model model, Connection connection) {
         Manages manages = (Manages) model;
+        String query = "UPDATE Manages SET trainID = ? WHERE empID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, manages.getTrainID());
+            ps.setInt(2, manages.getEmpID());
+            int numOfRows = ps.executeUpdate();
+            if (numOfRows == 0) {
+                System.out.println(
+                        Constants.WARNING_TAG +
+                                " Manages {empID: " +
+                                manages.getEmpID() +
+                                "} does not exist!"
+                );
+            }
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(Model model, Connection connection) {
+        Manages manages = (Manages) model;
         String query = "DELETE FROM Manages WHERE empID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -45,11 +69,6 @@ public class ManagesHandler implements ModelHandler {
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-    }
-
-    @Override
-    public void delete(Model model, Connection connection) {
-
     }
 
     @Override

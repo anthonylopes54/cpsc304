@@ -25,7 +25,29 @@ public class GoesThroughHandler implements ModelHandler {
 
     @Override
     public void update(Model model, Connection connection) {
-
+        GoesThrough goesThrough = (GoesThrough) model;
+        String query = "UPDATE GoesThrough SET timeOfStop = ? WHERE name = ? AND routeID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setTimestamp(1, (Timestamp) goesThrough.getTimeOfStop()); // TODO
+            ps.setString(2, goesThrough.getStationName());
+            ps.setInt(3, goesThrough.getRouteID());
+            int numOfRows = ps.executeUpdate();
+            if (numOfRows == 0) {
+                System.out.println(
+                        Constants.WARNING_TAG +
+                                " GoesThrough {name: " +
+                                goesThrough.getStationName() +
+                                "; routeID: " +
+                                goesThrough.getRouteID() +
+                                "} does not exist!"
+                );
+            }
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
     }
 
     @Override

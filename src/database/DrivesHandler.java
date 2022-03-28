@@ -26,7 +26,7 @@ public class DrivesHandler implements ModelHandler {
 
     @Override
     public void update(Model modal, Connection connection) {
-
+        System.out.println(Constants.WARNING_TAG + " Drives table should not be updated; only inserted and deleted");
     }
 
     @Override

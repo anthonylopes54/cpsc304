@@ -27,7 +27,29 @@ public class Cargo_BelongsToHandler implements ModelHandler {
 
     @Override
     public void update(Model model, Connection connection) {
-
+        Cargo_BelongsTo cbt = (Cargo_BelongsTo) model;
+        String query = "UPDATE Cargo_BelongsTo SET weight = ? WHERE passengerID = ? AND cargoID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, cbt.getWeight());
+            ps.setInt(2, cbt.getPassengerID());
+            ps.setInt(3, cbt.getCargoID());
+            int numOfRows = ps.executeUpdate();
+            if (numOfRows == 0) {
+                System.out.println(
+                        Constants.WARNING_TAG +
+                                " Cargo_BelongsTo {empID: " +
+                                cbt.getPassengerID() +
+                                "; trainID: " +
+                                cbt.getCargoID() +
+                                "} does not exist!"
+                );
+            }
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
     }
 
     @Override

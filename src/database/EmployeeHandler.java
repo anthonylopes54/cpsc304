@@ -34,8 +34,35 @@ public class EmployeeHandler implements ModelHandler {
     }
 
     @Override
-    public void update(Model modal, Connection connection) {
-
+    public void update(Model model, Connection connection) {
+        Employee employee = (Employee) model;
+        String query = "UPDATE Employee SET name = ?, specialization = ?, salary = ?, dateOfBirth = ?, email = ?, freightCar = ?, licenseExpiryDate = ?, licenseNumber = ?, certificationIssueDate = ? WHERE empID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, employee.getName());
+            ps.setString(2, employee.getSpecialization());
+            ps.setInt(3, employee.getSalary());
+            ps.setDate(4, (Date) employee.getDate());
+            ps.setString(5, employee.getEmail());
+            ps.setInt(6, employee.getFreightCar());
+            ps.setDate(7, (Date) employee.getLicenseExpiryDate());
+            ps.setInt(8, employee.getLicenseNumber());
+            ps.setDate(9, (Date) employee.getCertificationIssueDate());
+            ps.setInt(10, employee.getEmpID());
+            int numOfRows = ps.executeUpdate();
+            if (numOfRows == 0) {
+                System.out.println(
+                        Constants.WARNING_TAG +
+                                " Employee {empID: " +
+                                employee.getEmpID() +
+                                "} does not exist!"
+                );
+            }
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
     }
 
     @Override

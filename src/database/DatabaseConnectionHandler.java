@@ -216,10 +216,11 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
-    public void update(Model modal, int id) {
-        switch (modal.type) {
+    public void update(Model model, int id) {
+        switch (model.type) {
             case DRIVES -> {
-
+                DrivesHandler drivesHandler = new DrivesHandler();
+                drivesHandler.update(model, connection);
             }
             case TRIP -> {
 
@@ -228,13 +229,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                managesHandler.update(model, connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                employeeHandler.update(model, connection);
             }
             case MAINTAINS -> {
 
@@ -258,10 +261,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                goesThroughHandler.update(model, connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cargo_belongsToHandler = new Cargo_BelongsToHandler();
+                cargo_belongsToHandler.update(model, connection);
             }
             default -> {
                 // no-op
