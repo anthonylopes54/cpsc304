@@ -122,7 +122,8 @@ public class DatabaseConnectionHandler {
 
             }
             case ROUTE -> {
-
+                RouteHandler routeHandler = new RouteHandler();
+                routeHandler.Insert(model, connection);
             }
             case MANAGES -> {
                 ManagesHandler managesHandler = new ManagesHandler();
@@ -136,15 +137,23 @@ public class DatabaseConnectionHandler {
                 employeeHandler.Insert(model, connection);
             }
             case MAINTAINS -> {
+                MaintainsHandler maintainsHandler = new MaintainsHandler();
+                maintainsHandler.Insert(model, connection);
 
             }
             case PASSENGER -> {
+                PassengerHandler passengerHandler = new PassengerHandler();
+                passengerHandler.Insert(model, connection);
 
             }
             case SEAT_MAIN -> {
+                Seat_MainHandler seat_mainHandler = new Seat_MainHandler();
+                seat_mainHandler.Insert(model, connection);
 
             }
             case SEAT_CAR_MAPPING -> {
+                Seat_CarMappingHandler seat_CarMappingHandler = new Seat_CarMappingHandler();
+                seat_CarMappingHandler.Insert(model, connection);
 
             }
             case STORED_AT -> {
@@ -180,6 +189,8 @@ public class DatabaseConnectionHandler {
 
             }
             case ROUTE -> {
+                RouteHandler routeHandler = new RouteHandler();
+                routeHandler.getInfo(connection);
 
             }
             case MANAGES -> {
@@ -194,15 +205,22 @@ public class DatabaseConnectionHandler {
                 return employeeHandler.getInfo(connection);
             }
             case MAINTAINS -> {
+                MaintainsHandler maintainsHandler = new MaintainsHandler();
+                maintainsHandler.getInfo(connection);
 
             }
             case PASSENGER -> {
+                PassengerHandler passengerHandler = new PassengerHandler();
+                passengerHandler.getInfo(connection);
 
             }
             case SEAT_MAIN -> {
-
+                Seat_MainHandler seat_mainHandler = new Seat_MainHandler();
+                seat_mainHandler.getInfo(connection);
             }
             case SEAT_CAR_MAPPING -> {
+                Seat_CarMappingHandler seat_CarMappingHandler = new Seat_CarMappingHandler();
+                seat_CarMappingHandler.getInfo(connection);
 
             }
             case STORED_AT -> {
@@ -239,7 +257,8 @@ public class DatabaseConnectionHandler {
 
             }
             case ROUTE -> {
-
+                RouteHandler routeHandler = new RouteHandler();
+                routeHandler.update(model, connection);
             }
             case MANAGES -> {
                 ManagesHandler managesHandler = new ManagesHandler();
@@ -253,15 +272,22 @@ public class DatabaseConnectionHandler {
                 employeeHandler.update(model, connection);
             }
             case MAINTAINS -> {
-
+                MaintainsHandler maintainsHandler = new MaintainsHandler();
+                maintainsHandler.update(model, connection);
             }
             case PASSENGER -> {
+                PassengerHandler passengerHandler = new PassengerHandler();
+                passengerHandler.update(model, connection);
 
             }
             case SEAT_MAIN -> {
+                Seat_MainHandler seat_mainHandler = new Seat_MainHandler();
+                seat_mainHandler.update(model, connection);
 
             }
             case SEAT_CAR_MAPPING -> {
+                Seat_CarMappingHandler seat_CarMappingHandler = new Seat_CarMappingHandler();
+                seat_CarMappingHandler.update(model, connection);
 
             }
             case STORED_AT -> {
