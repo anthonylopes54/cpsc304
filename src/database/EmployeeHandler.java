@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class EmployeeHandler implements ModelHandler {
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Employee employee = (Employee) model;
         String query = "INSERT INTO Employee VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {

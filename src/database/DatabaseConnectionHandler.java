@@ -53,7 +53,8 @@ public class DatabaseConnectionHandler {
                 drivesHandler.delete(model, connection);
             }
             case TRIP -> {
-
+                TripHandler tripHandler = new TripHandler(this);
+                tripHandler.delete(model, connection);
             }
             case ROUTE -> {
 
@@ -63,7 +64,8 @@ public class DatabaseConnectionHandler {
                 managesHandler.delete(model, connection);
             }
             case STATION -> {
-
+                StationHandler stationHandler = new StationHandler(this);
+                stationHandler.delete(model, connection);
             }
             case EMPLOYEE -> {
                 EmployeeHandler employeeHandler = new EmployeeHandler();
@@ -82,13 +84,16 @@ public class DatabaseConnectionHandler {
 
             }
             case STORED_AT -> {
-
+                StoredAtHandler storedAtHandler = new StoredAtHandler(this);
+                storedAtHandler.delete(model, connection);
             }
             case TRAIN_EXTRA -> {
-
+                Train_ExtraHandler train_extraHandler = new Train_ExtraHandler(this);
+                train_extraHandler.delete(model, connection);
             }
-            case TRAIN_MAIN_INFO -> {
-
+            case TRAIN_MAIN -> {
+                Train_MainHandler train_mainHandler = new Train_MainHandler(this);
+                train_mainHandler.delete(model, connection);
             }
             case GOES_THROUGH -> {
                 GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
@@ -108,24 +113,26 @@ public class DatabaseConnectionHandler {
         switch (model.type) {
             case DRIVES -> {
                 DrivesHandler dh = new DrivesHandler();
-                dh.Insert(model, connection);
+                dh.insert(model, connection);
             }
             case TRIP -> {
-
+                TripHandler tripHandler = new TripHandler(this);
+                tripHandler.insert(model, connection);
             }
             case ROUTE -> {
 
             }
             case MANAGES -> {
                 ManagesHandler managesHandler = new ManagesHandler();
-                managesHandler.Insert(model, connection);
+                managesHandler.insert(model, connection);
             }
             case STATION -> {
-
+                StationHandler stationHandler = new StationHandler(this);
+                stationHandler.insert(model, connection);
             }
             case EMPLOYEE -> {
                 EmployeeHandler employeeHandler = new EmployeeHandler();
-                employeeHandler.Insert(model, connection);
+                employeeHandler.insert(model, connection);
             }
             case MAINTAINS -> {
 
@@ -140,21 +147,24 @@ public class DatabaseConnectionHandler {
 
             }
             case STORED_AT -> {
-
+                StoredAtHandler storedAtHandler = new StoredAtHandler(this);
+                storedAtHandler.insert(model, connection);
             }
             case TRAIN_EXTRA -> {
-
+                Train_ExtraHandler train_extraHandler = new Train_ExtraHandler(this);
+                train_extraHandler.insert(model, connection);
             }
-            case TRAIN_MAIN_INFO -> {
-
+            case TRAIN_MAIN -> {
+                Train_MainHandler train_mainHandler = new Train_MainHandler(this);
+                train_mainHandler.insert(model, connection);
             }
             case GOES_THROUGH -> {
                 GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
-                goesThroughHandler.Insert(model, connection);
+                goesThroughHandler.insert(model, connection);
             }
             case CARGO_BELONGS_TO -> {
                 Cargo_BelongsToHandler cbtHandler = new Cargo_BelongsToHandler();
-                cbtHandler.Insert(model, connection);
+                cbtHandler.insert(model, connection);
             }
             default -> {
                 // no-op
@@ -169,7 +179,8 @@ public class DatabaseConnectionHandler {
                 return drivesHandler.getInfo(connection);
             }
             case TRIP -> {
-
+                TripHandler tripHandler = new TripHandler(this);
+                tripHandler.getInfo(connection);
             }
             case ROUTE -> {
 
@@ -179,7 +190,8 @@ public class DatabaseConnectionHandler {
                 return managesHandler.getInfo(connection);
             }
             case STATION -> {
-
+                StationHandler stationHandler = new StationHandler(this);
+                stationHandler.getInfo(connection);
             }
             case EMPLOYEE -> {
                 EmployeeHandler employeeHandler = new EmployeeHandler();
@@ -198,13 +210,16 @@ public class DatabaseConnectionHandler {
 
             }
             case STORED_AT -> {
-
+                StoredAtHandler storedAtHandler = new StoredAtHandler(this);
+                storedAtHandler.getInfo(connection);
             }
             case TRAIN_EXTRA -> {
-
+                Train_ExtraHandler train_extraHandler = new Train_ExtraHandler(this);
+                train_extraHandler.getInfo(connection);
             }
-            case TRAIN_MAIN_INFO -> {
-
+            case TRAIN_MAIN -> {
+                Train_MainHandler train_mainHandler = new Train_MainHandler(this);
+                train_mainHandler.getInfo(connection);
             }
             case GOES_THROUGH -> {
                 GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
@@ -228,7 +243,8 @@ public class DatabaseConnectionHandler {
                 drivesHandler.update(model, connection);
             }
             case TRIP -> {
-
+                TripHandler tripHandler = new TripHandler(this);
+                tripHandler.update(model, connection);
             }
             case ROUTE -> {
 
@@ -238,7 +254,8 @@ public class DatabaseConnectionHandler {
                 managesHandler.update(model, connection);
             }
             case STATION -> {
-
+                StationHandler stationHandler = new StationHandler(this);
+                stationHandler.update(model, connection);
             }
             case EMPLOYEE -> {
                 EmployeeHandler employeeHandler = new EmployeeHandler();
@@ -257,13 +274,16 @@ public class DatabaseConnectionHandler {
 
             }
             case STORED_AT -> {
-
+                StoredAtHandler storedAtHandler = new StoredAtHandler(this);
+                storedAtHandler.update(model, connection);
             }
             case TRAIN_EXTRA -> {
-
+                Train_ExtraHandler train_extraHandler = new Train_ExtraHandler(this);
+                train_extraHandler.update(model, connection);
             }
-            case TRAIN_MAIN_INFO -> {
-
+            case TRAIN_MAIN -> {
+                Train_MainHandler train_mainHandler = new Train_MainHandler(this);
+                train_mainHandler.update(model, connection);
             }
             case GOES_THROUGH -> {
                 GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
@@ -278,4 +298,13 @@ public class DatabaseConnectionHandler {
             }
         }
     }
+
+    public void rollbackConnection() {
+        try  {
+            connection.rollback();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DrivesHandler implements ModelHandler {
     @Override
-    public void Insert(Model modal, Connection connection) {
+    public void insert(Model modal, Connection connection) {
         Drives drives = (Drives) modal;
         String query = "INSERT INTO Drives VALUES (?,?)";
         try {

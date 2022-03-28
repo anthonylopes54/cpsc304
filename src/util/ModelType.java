@@ -7,7 +7,7 @@ public enum ModelType {
     MAINTAINS,
     PASSENGER,
     TRAIN_EXTRA,
-    TRAIN_MAIN_INFO,
+    TRAIN_MAIN,
     CARGO_BELONGS_TO,
     GOES_THROUGH,
     ROUTE,
