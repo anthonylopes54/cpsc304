@@ -2,9 +2,11 @@ package database;
 
 import models.Model;
 import models.Train_Extra;
+import oracle.jdbc.proxy.annotation.Pre;
 import util.Constants;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class Train_ExtraHandler implements ModelHandler {
 
         try {
             String query = "INSERT INTO Train_Extra VALUES (?,?,?,?)";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, train_extra.getModel());
             ps.setInt(2, train_extra.getManufactureYear());
             ps.setInt(3, train_extra.getNumSeats());
@@ -49,7 +51,7 @@ public class Train_ExtraHandler implements ModelHandler {
 
         try {
             String query = "UPDATE Train_Extra SET numSeats = ?, numCars = ? WHERE model = ? AND manufactureYear = ?";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(3, trainModel);
             ps.setInt(4, manufactureYear);
             ps.setInt(1, numSeats);
@@ -78,7 +80,7 @@ public class Train_ExtraHandler implements ModelHandler {
 
         try {
             String query = "DELETE FROM Train_Extra WHERE (model, manufactureYear) = (?,?)";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, trainModel);
             ps.setInt(2, manufactureYear);
 
@@ -102,7 +104,7 @@ public class Train_ExtraHandler implements ModelHandler {
 
         try {
             String query = "SELECT * FROM Train_Extra";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {

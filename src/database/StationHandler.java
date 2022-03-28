@@ -4,11 +4,11 @@ import models.Model;
 import models.Station;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import ca.ubc.cs304.util.PrintablePreparedStatement;
 import util.Constants;
 
 public class StationHandler implements ModelHandler {
@@ -24,7 +24,7 @@ public class StationHandler implements ModelHandler {
 
         try {
             String query = "INSERT INTO Station VALUES (?,?)";
-            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, station.getName());
             ps.setString(2, station.getAddress());
 
@@ -47,7 +47,7 @@ public class StationHandler implements ModelHandler {
 
         try {
             String query = "UPDATE Station SET address = ? WHERE name = ?";
-            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(2, name);
             ps.setString(1, address);
 
@@ -73,7 +73,7 @@ public class StationHandler implements ModelHandler {
 
         try {
             String query = "DELETE FROM Station WHERE name = ?";
-            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
 
             int rowCount = ps.executeUpdate();
@@ -96,7 +96,7 @@ public class StationHandler implements ModelHandler {
 
         try {
             String query = "SELECT * FROM Station";
-            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {

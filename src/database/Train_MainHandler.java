@@ -4,6 +4,7 @@ import models.*;
 import util.Constants;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Train_MainHandler implements ModelHandler {
 
         try {
             String query = "INSERT INTO Train_Main VALUES (?,?,?)";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, train.getTrainID());
             ps.setString(2, train.getModel());
             ps.setInt(3, train.getManufactureYear());
@@ -46,7 +47,7 @@ public class Train_MainHandler implements ModelHandler {
 
         try {
             String query = "UPDATE Train_Main SET model = ?, manufactureYear= ? WHERE trainID = ?";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(3, trainID);
             ps.setString(1, trainModel);
             ps.setInt(2, manufactureYear);
@@ -73,7 +74,7 @@ public class Train_MainHandler implements ModelHandler {
 
         try {
             String query = "DELETE FROM Train_Main WHERE trainID = ?";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, trainID);
 
             int rowCount = ps.executeUpdate();
@@ -96,7 +97,7 @@ public class Train_MainHandler implements ModelHandler {
 
         try {
             String query = "SELECT * FROM Train_Main";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {

@@ -4,6 +4,7 @@ import models.*;
 import util.Constants;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class TripHandler implements ModelHandler {
 
         try {
             String query = "INSERT INTO Trip VALUES (?,?,?,?)";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, trip.getSeatNum());
             ps.setInt(2, trip.getRouteID());
             ps.setInt(3, trip.getPassengerID());
@@ -55,7 +56,7 @@ public class TripHandler implements ModelHandler {
 
         try {
             String query = "DELETE FROM Trip WHERE (seatNum, routeID, passengerID, trainID) = (?,?,?,?)";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, seatNum);
             ps.setInt(2, routeID);
             ps.setInt(3, passengerID);
@@ -81,7 +82,7 @@ public class TripHandler implements ModelHandler {
 
         try {
             String query = "SELECT * FROM Trip";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
