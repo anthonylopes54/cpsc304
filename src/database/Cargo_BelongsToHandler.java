@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Cargo_BelongsToHandler implements ModelHandler {
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Cargo_BelongsTo cbt = (Cargo_BelongsTo) model;
         String query = "INSERT INTO Cargo_BelongsTo VALUES (?,?,?)";
         try {

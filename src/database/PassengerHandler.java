@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.sql.Connection;
+
 public class PassengerHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
@@ -26,6 +28,7 @@ public class PassengerHandler implements ModelHandler {
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
+
     }
 
     @Override
@@ -61,6 +64,7 @@ public class PassengerHandler implements ModelHandler {
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, passenger.getPassengerID());
+
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
@@ -98,6 +102,7 @@ public class PassengerHandler implements ModelHandler {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
         return res.toArray(new Passenger[0]);
+
 
     }
 }
