@@ -27,7 +27,7 @@ CREATE TABLE Train_Main (
     model           VARCHAR(20),
     manufactureYear INT,
     PRIMARY KEY (trainID),
-    FOREIGN KEY (model, manufactureYear) REFERENCES Train_Extra -- cascade??
+    FOREIGN KEY (model, manufactureYear) REFERENCES Train_Extra On DELETE CASCADE
 );
 
 CREATE TABLE Manages (
