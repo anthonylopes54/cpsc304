@@ -27,29 +27,7 @@ public class MaintainsHandler implements ModelHandler{
 
     @Override
     public void update(Model model, Connection connection) {
-        // !TODO Can this table have updates?
-        Maintains maintains = (Maintains) model;
-        String query = "UPDATE Maintains SET trainID = ?, WHERE empID = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, maintains.getTrainID());
-            ps.setInt(2, maintains.getEmpID());
-
-            int numOfRows = ps.executeUpdate();
-            if (numOfRows == 0) {
-                System.out.println(
-                        Constants.WARNING_TAG +
-                                " Maintains {empID: " +
-                                maintains.getTrainID() +
-                                "} does not exist!"
-                );
-            }
-            connection.commit();
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
-        }
-
+        System.out.println(Constants.WARNING_TAG + " Maintains table should not be updated; only inserted and deleted");
     }
 
     @Override
@@ -65,7 +43,7 @@ public class MaintainsHandler implements ModelHandler{
                 System.out.println(
                         Constants.WARNING_TAG +
                                 " Maintains {empID: " +
-                                maintains.getTrainID() +
+                                maintains.getEmpID() +
                                 "} does not exist!"
                 );
             }

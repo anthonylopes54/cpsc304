@@ -22,7 +22,7 @@ public class RouteHandler implements ModelHandler {
             ps.setString(3, route.getDestinationStation());
             ps.setInt(4, route.getTripDistance());
             ps.setInt(5, route.getEstimatedDuration());
-            ps.setDate(6, route.getDepartureTime());
+            ps.setTimestamp(6, route.getDepartureTime());
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class RouteHandler implements ModelHandler {
             ps.setString(2, route.getDestinationStation());
             ps.setInt(3, route.getTripDistance());
             ps.setInt(4, route.getEstimatedDuration());
-            ps.setDate(5, route.getDepartureTime());
+            ps.setTimestamp(5, route.getDepartureTime());
             ps.setInt(6,route.getRouteID());
 
 
@@ -99,7 +99,7 @@ public class RouteHandler implements ModelHandler {
                         resultSet.getString("destinationStation"),
                         (resultSet.getInt("tripDistance")),
                         (resultSet.getInt("estimatedDuration")),
-                        resultSet.getDate("departureTime")
+                        resultSet.getTimestamp("departureTime")
                 );
 
                 res.add(route);

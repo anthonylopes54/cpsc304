@@ -76,7 +76,7 @@ public class Seat_MainHandler implements ModelHandler{
                 System.out.println(
                         Constants.WARNING_TAG +
                                 " Seat_main {seatNum: " +
-                                seat_main.getSeatNum() + " AND trainID" +
+                                seat_main.getSeatNum() + " AND trainID: " +
                                 seat_main.getTrainID() +
                                 "} does not exist!"
                 );
