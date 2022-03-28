@@ -2,13 +2,14 @@ package models;
 
 import util.ModelType;
 
-public class Mantains extends Model {
+public class Maintains extends Model {
     private final int empID;
     private final int trainID;
 
-    public Mantains(int empID, int trainID) {
+    public Maintains(int empID, int trainID) {
         this.empID = empID;
         this.trainID = trainID;
+
         this.type = ModelType.MAINTAINS;
     }
 

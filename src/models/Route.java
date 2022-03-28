@@ -1,23 +1,28 @@
 package models;
 
-import java.sql.Date;
+import util.ModelType;
 
-public class Route {
+import java.sql.Date;
+import java.sql.Timestamp;
+
+public class Route extends Model{
     private final int routeID;
     private final String departureStation;
     private final String destinationStation;
     private final int tripDistance;
     private final int estimatedDuration;
-    private final Date departureTime;
+    private final Timestamp departureTime;
 
     public Route(int routeID, String departureStation, String destinationStation, int tripDistance,
-                 int estimatedDuration, Date departureTime) {
+                 int estimatedDuration, Timestamp departureTime) {
         this.routeID = routeID;
         this.departureStation = departureStation;
         this.destinationStation = destinationStation;
         this.tripDistance = tripDistance;
         this.estimatedDuration = estimatedDuration;
         this.departureTime = departureTime;
+        this.type = ModelType.ROUTE;
+
     }
 
     public int getRouteID() {
@@ -40,7 +45,7 @@ public class Route {
         return this.estimatedDuration;
     }
 
-    public Date getDepartureTime() {
+    public Timestamp getDepartureTime() {
         return this.departureTime;
     }
 }

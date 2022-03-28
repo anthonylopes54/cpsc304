@@ -3,7 +3,7 @@ package database;
 import models.Drives;
 import models.Maintains;
 import models.Model;
-import models.Passenger;
+import models.Seat_CarMapping;
 import util.Constants;
 
 import java.sql.Connection;
@@ -12,40 +12,42 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import java.sql.Connection;
+public class Seat_CarMappingHandler implements ModelHandler{
 
-public class PassengerHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "INSERT INTO Passenger VALUES (?,?)";
+        Seat_CarMapping seat_carMapping = (Seat_CarMapping) model;
+        String query = "INSERT INTO Seat_CarMapping VALUES (?,?)";
         try {
+
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, passenger.getPassengerID());
-            ps.setString(2, passenger.getName());
+
+            ps.setInt(1,seat_carMapping.getSeatNum());
+            ps.setInt(2, seat_carMapping.getCarNum());
+
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-
     }
 
     @Override
     public void update(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "UPDATE Passenger SET name = ?, WHERE passengerID = ?";
+        Seat_CarMapping seat_carMapping = (Seat_CarMapping) model;
+        String query = "UPDATE Seat_CarMapping SET carNum = ?, WHERE seatNum = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, passenger.getName());
-            ps.setInt(2, passenger.getPassengerID());
+
+            ps.setInt(1, seat_carMapping.getCarNum());
+            ps.setInt(2,seat_carMapping.getSeatNum());
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Passenger {passengerID: " +
-                                passenger.getPassengerID() +
+                                " Seat_CarMapping {seatNum: " +
+                                seat_carMapping.getSeatNum() +
                                 "} does not exist!"
                 );
             }
@@ -59,22 +61,22 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public void delete(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "DELETE FROM Passenger WHERE passengerID = ?";
+        Seat_CarMapping seat_carMapping = (Seat_CarMapping) model;
+        String query = "DELETE FROM Seat_CarMapping WHERE seatNum = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, passenger.getPassengerID());
-
+            ps.setInt(1, seat_carMapping.getSeatNum());
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Passenger {empID: " +
-                                passenger.getPassengerID() +
+                                " Seat_CarMapping {seatNum: " +
+                                seat_carMapping.getSeatNum() +
                                 "} does not exist!"
                 );
             }
+
             connection.commit();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
@@ -83,26 +85,25 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        ArrayList<Passenger> res = new ArrayList<>();
-        String query = "SELECT * FROM Passenger";
+        ArrayList<Seat_CarMapping> res = new ArrayList<>();
+        String query = "SELECT * FROM Seat_CarMapping";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();
 
             while(resultSet.next()) {
-                Passenger passenger = new Passenger(
-                        resultSet.getInt("passengerID"),
-                        resultSet.getString("name")
+                Seat_CarMapping seat_CarMapping = new Seat_CarMapping(
+                        (resultSet.getInt("seatNum")),
+                        (resultSet.getInt("carNum"))
                 );
-                res.add(passenger);
+                res.add(seat_CarMapping);
             }
             resultSet.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-        return res.toArray(new Passenger[0]);
-
+        return res.toArray(new Seat_CarMapping[0]);
 
     }
 }

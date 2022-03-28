@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class EmployeeHandler implements ModelHandler {
+
     @Override
     public void insert(Model model, Connection connection) {
         Employee employee = (Employee) model;

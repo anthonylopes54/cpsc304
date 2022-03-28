@@ -1,6 +1,8 @@
 package models;
 
-public class Seat_Main {
+import util.ModelType;
+
+public class Seat_Main extends Model {
     private final int seatNum;
     private final int trainID;
     private final String class_;
@@ -9,6 +11,8 @@ public class Seat_Main {
         this.seatNum = seatNum;
         this.trainID = trainID;
         this.class_ = class_;
+        this.type = ModelType.SEAT_MAIN;
+
     }
 
     public int getSeatNum() {

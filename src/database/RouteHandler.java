@@ -1,51 +1,55 @@
 package database;
 
 import models.Drives;
-import models.Maintains;
 import models.Model;
 import models.Passenger;
+import models.Route;
 import util.Constants;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
-import java.sql.Connection;
+public class RouteHandler implements ModelHandler {
 
-public class PassengerHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "INSERT INTO Passenger VALUES (?,?)";
+        Route route = (Route) model;
+        String query = "INSERT INTO Route VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, passenger.getPassengerID());
-            ps.setString(2, passenger.getName());
+            ps.setInt(1,route.getRouteID());
+            ps.setString(2, route.getDepartureStation());
+            ps.setString(3, route.getDestinationStation());
+            ps.setInt(4, route.getTripDistance());
+            ps.setInt(5, route.getEstimatedDuration());
+            ps.setTimestamp(6, route.getDepartureTime());
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-
     }
 
     @Override
     public void update(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "UPDATE Passenger SET name = ?, WHERE passengerID = ?";
+        Route route = (Route) model;
+        String query = "UPDATE Route SET departureStation = ?, destinationStation = ?, tripDistance = ?, estimatedDuration = ?, departureTime = ?, WHERE routeID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, passenger.getName());
-            ps.setInt(2, passenger.getPassengerID());
+            ps.setString(1, route.getDepartureStation());
+            ps.setString(2, route.getDestinationStation());
+            ps.setInt(3, route.getTripDistance());
+            ps.setInt(4, route.getEstimatedDuration());
+            ps.setTimestamp(5, route.getDepartureTime());
+            ps.setInt(6,route.getRouteID());
+
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Passenger {passengerID: " +
-                                passenger.getPassengerID() +
+                                " Route {routeID: " +
+                                route.getRouteID() +
                                 "} does not exist!"
                 );
             }
@@ -59,19 +63,18 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public void delete(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "DELETE FROM Passenger WHERE passengerID = ?";
+        Route route = (Route) model;
+        String query = "DELETE FROM Route WHERE routeID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, passenger.getPassengerID());
-
+            ps.setInt(1, route.getRouteID());
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Passenger {empID: " +
-                                passenger.getPassengerID() +
+                                " Route {routeID: " +
+                                route.getRouteID() +
                                 "} does not exist!"
                 );
             }
@@ -83,26 +86,30 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        ArrayList<Passenger> res = new ArrayList<>();
-        String query = "SELECT * FROM Passenger";
+        ArrayList<Route> res = new ArrayList<>();
+        String query = "SELECT * FROM Route";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();
 
             while(resultSet.next()) {
-                Passenger passenger = new Passenger(
-                        resultSet.getInt("passengerID"),
-                        resultSet.getString("name")
+                Route route = new Route(
+                        (resultSet.getInt("routeID")),
+                        resultSet.getString("departureStation"),
+                        resultSet.getString("destinationStation"),
+                        (resultSet.getInt("tripDistance")),
+                        (resultSet.getInt("estimatedDuration")),
+                        resultSet.getTimestamp("departureTime")
                 );
-                res.add(passenger);
+
+                res.add(route);
             }
             resultSet.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-        return res.toArray(new Passenger[0]);
-
+        return res.toArray(new Route[0]);
 
     }
 }
