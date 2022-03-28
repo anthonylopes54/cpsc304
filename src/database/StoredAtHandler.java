@@ -1,7 +1,6 @@
 package database;
 
 import models.Model;
-import models.Station;
 import models.StoredAt;
 import util.Constants;
 
@@ -40,9 +39,31 @@ public class StoredAtHandler implements ModelHandler {
     // primaryKey: trainID
     @Override
     public void update(Model model, Connection connection) {
-        // TODO
+        StoredAt storedAt = (StoredAt) model;
+        int trainID = storedAt.getTrainID();
+        String stationName = storedAt.getStationName();
+
+        try {
+            String query = "UPDATE StoredAt SET stationName = ? WHERE trainID = ?";
+            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ps.setInt(2, trainID);
+            ps.setString(1, stationName);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(Constants.WARNING_TAG + " StoredAt {trainID: " + trainID + "} does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            dbHandler.rollbackConnection();
+        }
     }
 
+    // primaryKey: trainID
     @Override
     public void delete(Model model, Connection connection) {
         StoredAt storedAt = (StoredAt) model;
@@ -55,7 +76,7 @@ public class StoredAtHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(Constants.WARNING_TAG + " StoredAt '" + trainID + "' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " StoredAt {trainID: " + trainID + "} does not exist!");
             }
 
             connection.commit();

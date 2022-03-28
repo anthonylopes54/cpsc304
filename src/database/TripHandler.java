@@ -1,9 +1,6 @@
 package database;
 
-import models.Model;
-import models.Station;
-import models.Train_Extra;
-import models.Trip;
+import models.*;
 import util.Constants;
 
 import java.sql.Connection;
@@ -43,9 +40,16 @@ public class TripHandler implements ModelHandler {
     // primaryKey: (seatNum, routeID, passengerID, trainID)
     @Override
     public void update(Model model, Connection connection) {
-        // TODO
+        Trip trip = (Trip) model;
+        int seatNum = trip.getSeatNum();
+        int routeID = trip.getRouteID();
+        int passengerID = trip.getPassengerID();
+        int trainID = trip.getTrainID();
+
+        // every field is part of the key, therefore we can't do any updates
     }
 
+    // primaryKey: (seatNum, routeID, passengerID, trainID)
     @Override
     public void delete(Model model, Connection connection) {
         Trip trip = (Trip) model;

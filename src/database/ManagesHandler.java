@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ManagesHandler implements ModelHandler {
 
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Manages manages = (Manages) model;
         String query = "INSERT INTO Manages VALUES (?,?)";
         try {

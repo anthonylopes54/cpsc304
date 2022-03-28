@@ -1,8 +1,6 @@
 package database;
 
 import models.Model;
-import models.Station;
-import models.StoredAt;
 import models.Train_Extra;
 import util.Constants;
 
@@ -43,9 +41,35 @@ public class Train_ExtraHandler implements ModelHandler {
     // primary key: (model, manufactureYear)
     @Override
     public void update(Model model, Connection connection) {
-        // TODO
+        Train_Extra train_extra = (Train_Extra) model;
+        String trainModel = train_extra.getModel();
+        int manufactureYear = train_extra.getManufactureYear();
+        int numSeats = train_extra.getNumSeats();
+        int numCars = train_extra.getNumCars();
+
+        try {
+            String query = "UPDATE Train_Extra SET numSeats = ?, numCars = ? WHERE model = ? AND manufactureYear = ?";
+            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ps.setString(3, trainModel);
+            ps.setInt(4, manufactureYear);
+            ps.setInt(1, numSeats);
+            ps.setInt(2, numCars);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(Constants.WARNING_TAG + " Train_Extra {model: " + trainModel + ", manufactureYear = " + manufactureYear + "} does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            dbHandler.rollbackConnection();
+        }
     }
 
+    // primary key: (model, manufactureYear)
     @Override
     public void delete(Model model, Connection connection) {
         Train_Extra train_extra = (Train_Extra) model;
@@ -60,7 +84,7 @@ public class Train_ExtraHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(Constants.WARNING_TAG + " Train_Extra '(" + trainModel + "," + manufactureYear + ")' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " Train_Extra {model: " + trainModel + ", manufactureYear = " + manufactureYear + "} does not exist!");
             }
 
             connection.commit();

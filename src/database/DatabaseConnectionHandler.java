@@ -113,7 +113,7 @@ public class DatabaseConnectionHandler {
         switch (model.type) {
             case DRIVES -> {
                 DrivesHandler dh = new DrivesHandler();
-                dh.Insert(model, connection);
+                dh.insert(model, connection);
             }
             case TRIP -> {
                 TripHandler tripHandler = new TripHandler(this);
@@ -124,7 +124,7 @@ public class DatabaseConnectionHandler {
             }
             case MANAGES -> {
                 ManagesHandler managesHandler = new ManagesHandler();
-                managesHandler.Insert(model, connection);
+                managesHandler.insert(model, connection);
             }
             case STATION -> {
                 StationHandler stationHandler = new StationHandler(this);
@@ -132,7 +132,7 @@ public class DatabaseConnectionHandler {
             }
             case EMPLOYEE -> {
                 EmployeeHandler employeeHandler = new EmployeeHandler();
-                employeeHandler.Insert(model, connection);
+                employeeHandler.insert(model, connection);
             }
             case MAINTAINS -> {
 
@@ -160,11 +160,11 @@ public class DatabaseConnectionHandler {
             }
             case GOES_THROUGH -> {
                 GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
-                goesThroughHandler.Insert(model, connection);
+                goesThroughHandler.insert(model, connection);
             }
             case CARGO_BELONGS_TO -> {
                 Cargo_BelongsToHandler cbtHandler = new Cargo_BelongsToHandler();
-                cbtHandler.Insert(model, connection);
+                cbtHandler.insert(model, connection);
             }
             default -> {
                 // no-op

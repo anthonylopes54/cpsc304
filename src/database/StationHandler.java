@@ -41,9 +41,31 @@ public class StationHandler implements ModelHandler {
     // primaryKey: name
     @Override
     public void update(Model model, Connection connection) {
-        // TODO
+        Station station = (Station) model;
+        String name = station.getName();
+        String address = station.getAddress();
+
+        try {
+            String query = "UPDATE Station SET address = ? WHERE name = ?";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ps.setString(2, name);
+            ps.setString(1, address);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(Constants.WARNING_TAG + " Station {name: " + name + "} does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            dbHandler.rollbackConnection();
+        }
     }
 
+    // primaryKey: name
     @Override
     public void delete(Model model, Connection connection) {
         Station station = (Station) model;
@@ -56,7 +78,7 @@ public class StationHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(Constants.WARNING_TAG + " Station '" + name + "' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " Station {name: " + name + "} does not exist!");
             }
 
             connection.commit();

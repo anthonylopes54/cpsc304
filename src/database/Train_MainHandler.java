@@ -1,9 +1,6 @@
 package database;
 
-import models.Model;
-import models.Station;
-import models.Train_Main;
-import oracle.jdbc.driver.Const;
+import models.*;
 import util.Constants;
 
 import java.sql.Connection;
@@ -42,9 +39,33 @@ public class Train_MainHandler implements ModelHandler {
     // primaryKey: trainID
     @Override
     public void update(Model model, Connection connection) {
-        // TODO
+        Train_Main train_main = (Train_Main) model;
+        int trainID = train_main.getTrainID();
+        String trainModel = train_main.getModel();
+        int manufactureYear = train_main.getManufactureYear();
+
+        try {
+            String query = "UPDATE Train_Main SET model = ?, manufactureYear= ? WHERE trainID = ?";
+            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ps.setInt(3, trainID);
+            ps.setString(1, trainModel);
+            ps.setInt(2, manufactureYear);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(Constants.WARNING_TAG + " Train_Main {trainID: " + trainID + "} does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            dbHandler.rollbackConnection();
+        }
     }
 
+    // primaryKey: trainID
     @Override
     public void delete(Model model, Connection connection) {
         Train_Main train_main = (Train_Main) model;
@@ -57,7 +78,7 @@ public class Train_MainHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(Constants.WARNING_TAG + " Train_Main '" + trainID + "' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " Train_Main {trainID: " + trainID + "} does not exist!");
             }
 
             connection.commit();
