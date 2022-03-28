@@ -40,7 +40,7 @@ public class StoredAtHandler implements ModelHandler {
         }
     }
 
-    // primaryKey is trainID (int)
+    // primaryKey: "trainID"
     @Override
     public void update(Model model, String primaryKey) {
         // TODO

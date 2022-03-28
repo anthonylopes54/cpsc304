@@ -48,11 +48,12 @@ public class Train_ExtraHandler implements ModelHandler {
         // TODO
     }
 
+    // primaryKey: "model!manufactureYear"
     @Override
     public void delete(String primaryKey) {
-        // TODO: get key (model, manufactureYear) from primaryKey
-        String model = "";
-        int manufactureYear = -1;
+        String[] splitKey = primaryKey.split("!");
+        String model = splitKey[0];
+        int manufactureYear = Integer.parseInt(splitKey[1]);
 
         try {
             String query = "DELETE FROM Train_Extra WHERE (model, manufactureYear) = (?,?)";

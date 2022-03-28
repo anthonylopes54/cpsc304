@@ -46,6 +46,7 @@ public class Train_MainHandler implements ModelHandler {
         // TODO
     }
 
+    // primaryKey: "trainID"
     @Override
     public void delete(String primaryKey) {
         int trainID = Integer.parseInt(primaryKey);

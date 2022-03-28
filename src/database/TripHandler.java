@@ -48,13 +48,14 @@ public class TripHandler implements ModelHandler {
         // TODO
     }
 
+    // primaryKey: "seatNum!routeID!passengerID!trainID"
     @Override
     public void delete(String primaryKey) {
-        // TODO: get seatNum, routeID, passengerID, trainID from primaryKey
-        int seatNum = -1;
-        int routeID = -1;
-        int passengerID = -1;
-        int trainID = -1;
+        String[] splitKey = primaryKey.split("!");
+        int seatNum = Integer.parseInt(splitKey[0]);
+        int routeID = Integer.parseInt(splitKey[1]);
+        int passengerID = Integer.parseInt(splitKey[2]);
+        int trainID = Integer.parseInt(splitKey[3]);
 
         try {
             String query = "DELETE FROM Trip WHERE (seatNum, routeID, passengerID, trainID) = (?,?,?,?)";

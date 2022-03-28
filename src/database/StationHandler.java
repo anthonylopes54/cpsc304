@@ -46,7 +46,7 @@ public class StationHandler implements ModelHandler {
         // TODO
     }
 
-    // primaryKey for Station is name
+    // primaryKey: "name"
     @Override
     public void delete(String primaryKey) {
         String name = primaryKey;
