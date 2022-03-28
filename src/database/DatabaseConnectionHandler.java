@@ -1,5 +1,8 @@
 package database;
 
+import models.Route;
+import models.Seat_CarMapping;
+import models.Seat_Main;
 import util.Constants;
 import util.ModelType;
 import models.Model;
@@ -56,7 +59,8 @@ public class DatabaseConnectionHandler {
 
             }
             case ROUTE -> {
-
+                RouteHandler routeHandler = new RouteHandler();
+                routeHandler.delete(model, connection);
             }
             case MANAGES -> {
                 ManagesHandler managesHandler = new ManagesHandler();
@@ -70,16 +74,20 @@ public class DatabaseConnectionHandler {
                 employeeHandler.delete(model, connection);
             }
             case MAINTAINS -> {
-
+                MaintainsHandler maintainsHandler = new MaintainsHandler();
+                maintainsHandler.delete(model, connection);
             }
             case PASSENGER -> {
-
+                PassengerHandler passengerHandler = new PassengerHandler();
+                passengerHandler.delete(model, connection);
             }
             case SEAT_MAIN -> {
-
+                Seat_MainHandler seat_mainHandler = new Seat_MainHandler();
+                seat_mainHandler.delete(model, connection);
             }
             case SEAT_CAR_MAPPING -> {
-
+                Seat_CarMappingHandler seat_CarMappingHandler = new Seat_CarMappingHandler();
+                seat_CarMappingHandler.delete(model, connection);
             }
             case STORED_AT -> {
 
