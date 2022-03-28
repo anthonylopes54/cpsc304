@@ -12,17 +12,17 @@ import java.util.ArrayList;
 
 public class TripHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-    private final Connection connection;
+//    private final Connection connection;
     private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
     private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public TripHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-        this.connection = dbHandler.getConnection();
+//        this.connection = dbHandler.getConnection();
     }
 
     @Override
-    public void insert(Model model) {
+    public void insert(Model model, Connection connection) {
         Trip trip = (Trip) model;
 
         try {
@@ -43,19 +43,19 @@ public class TripHandler implements ModelHandler {
         }
     }
 
+    // primaryKey: (seatNum, routeID, passengerID, trainID)
     @Override
-    public void update(Model model, String primaryKey) {
+    public void update(Model model, Connection connection) {
         // TODO
     }
 
-    // primaryKey: "seatNum!routeID!passengerID!trainID"
     @Override
-    public void delete(String primaryKey) {
-        String[] splitKey = primaryKey.split("!");
-        int seatNum = Integer.parseInt(splitKey[0]);
-        int routeID = Integer.parseInt(splitKey[1]);
-        int passengerID = Integer.parseInt(splitKey[2]);
-        int trainID = Integer.parseInt(splitKey[3]);
+    public void delete(Model model, Connection connection) {
+        Trip trip = (Trip) model;
+        int seatNum = trip.getSeatNum();
+        int routeID = trip.getRouteID();
+        int passengerID = trip.getPassengerID();
+        int trainID = trip.getTrainID();
 
         try {
             String query = "DELETE FROM Trip WHERE (seatNum, routeID, passengerID, trainID) = (?,?,?,?)";
@@ -80,8 +80,8 @@ public class TripHandler implements ModelHandler {
     }
 
     @Override
-    public Model[] getInfo() {
-        ArrayList<Trip> result = new ArrayList<Trip>();
+    public Model[] getInfo(Connection connection) {
+        ArrayList<Trip> result = new ArrayList<>();
 
         try {
             String query = "SELECT * FROM Trip";
@@ -89,7 +89,11 @@ public class TripHandler implements ModelHandler {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Trip trip = new Trip(rs.getInt("seatNum"),rs.getInt("routeID"),rs.getInt("passengerID"),rs.getInt("trainID"));
+                Trip trip = new Trip(
+                        rs.getInt("seatNum"),
+                        rs.getInt("routeID"),
+                        rs.getInt("passengerID"),
+                        rs.getInt("trainID"));
                 result.add(trip);
             }
 

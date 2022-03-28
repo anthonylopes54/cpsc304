@@ -12,17 +12,17 @@ import ca.ubc.cs304.util.PrintablePreparedStatement;
 
 public class StationHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-    private final Connection connection;
+//    private final Connection connection;
     private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
     private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public StationHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-        this.connection = dbHandler.getConnection();
+//        this.connection = dbHandler.getConnection();
     }
 
     @Override
-    public void insert(Model model) {
+    public void insert(Model model, Connection connection) {
         Station station = (Station) model;
 
         try {
@@ -41,15 +41,16 @@ public class StationHandler implements ModelHandler {
         }
     }
 
+    // primaryKey: name
     @Override
-    public void update(Model model, String primaryKey) {
+    public void update(Model model, Connection connection) {
         // TODO
     }
 
-    // primaryKey: "name"
     @Override
-    public void delete(String primaryKey) {
-        String name = primaryKey;
+    public void delete(Model model, Connection connection) {
+        Station station = (Station) model;
+        String name = station.getName();
 
         try {
             String query = "DELETE FROM Station WHERE name = ?";
@@ -71,8 +72,8 @@ public class StationHandler implements ModelHandler {
     }
 
     @Override
-    public Model[] getInfo() {
-        ArrayList<Station> result = new ArrayList<Station>();
+    public Model[] getInfo(Connection connection) {
+        ArrayList<Station> result = new ArrayList<>();
 
         try {
             String query = "SELECT * FROM Station";
@@ -80,7 +81,9 @@ public class StationHandler implements ModelHandler {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Station station = new Station(rs.getString("name"),rs.getString("address"));
+                Station station = new Station(
+                        rs.getString("name"),
+                        rs.getString("address"));
                 result.add(station);
             }
 

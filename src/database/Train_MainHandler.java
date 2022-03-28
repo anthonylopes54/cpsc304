@@ -11,17 +11,17 @@ import java.util.ArrayList;
 
 public class Train_MainHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-    private final Connection connection;
+//    private final Connection connection;
     private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
     private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public Train_MainHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-        this.connection = dbHandler.getConnection();
+//        this.connection = dbHandler.getConnection();
     }
 
     @Override
-    public void insert(Model model) {
+    public void insert(Model model, Connection connection) {
         Train_Main train = (Train_Main) model;
 
         try {
@@ -41,15 +41,16 @@ public class Train_MainHandler implements ModelHandler {
         }
     }
 
+    // primaryKey: trainID
     @Override
-    public void update(Model model, String primaryKey) {
+    public void update(Model model, Connection connection) {
         // TODO
     }
 
-    // primaryKey: "trainID"
     @Override
-    public void delete(String primaryKey) {
-        int trainID = Integer.parseInt(primaryKey);
+    public void delete(Model model, Connection connection) {
+        Train_Main train_main = (Train_Main) model;
+        int trainID = train_main.getTrainID();
 
         try {
             String query = "DELETE FROM Train_Main WHERE trainID = ?";
@@ -71,8 +72,8 @@ public class Train_MainHandler implements ModelHandler {
     }
 
     @Override
-    public Model[] getInfo() {
-        ArrayList<Train_Main> result = new ArrayList<Train_Main>();
+    public Model[] getInfo(Connection connection) {
+        ArrayList<Train_Main> result = new ArrayList<>();
 
         try {
             String query = "SELECT * FROM Train_Main";
@@ -80,7 +81,10 @@ public class Train_MainHandler implements ModelHandler {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Train_Main train = new Train_Main(rs.getInt("trainID"),rs.getString("model"), rs.getInt("manufactureYear"));
+                Train_Main train = new Train_Main(
+                        rs.getInt("trainID"),
+                        rs.getString("model"),
+                        rs.getInt("manufactureYear"));
                 result.add(train);
             }
 

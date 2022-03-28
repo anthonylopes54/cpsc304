@@ -11,17 +11,17 @@ import java.util.ArrayList;
 
 public class StoredAtHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-    private final Connection connection;
+//    private final Connection connection;
     private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
     private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public StoredAtHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-        this.connection = dbHandler.getConnection();
+//        this.connection = dbHandler.getConnection();
     }
 
     @Override
-    public void insert(Model model) {
+    public void insert(Model model, Connection connection) {
         StoredAt storedAt = (StoredAt) model;
 
         try {
@@ -40,15 +40,16 @@ public class StoredAtHandler implements ModelHandler {
         }
     }
 
-    // primaryKey: "trainID"
+    // primaryKey: trainID
     @Override
-    public void update(Model model, String primaryKey) {
+    public void update(Model model, Connection connection) {
         // TODO
     }
 
     @Override
-    public void delete(String primaryKey) {
-        int trainID = Integer.parseInt(primaryKey);
+    public void delete(Model model, Connection connection) {
+        StoredAt storedAt = (StoredAt) model;
+        int trainID = storedAt.getTrainID();
 
         try {
             String query = "DELETE FROM StoredAt WHERE trainID = ?";
@@ -70,8 +71,8 @@ public class StoredAtHandler implements ModelHandler {
     }
 
     @Override
-    public Model[] getInfo() {
-        ArrayList<StoredAt> result = new ArrayList<StoredAt>();
+    public Model[] getInfo(Connection connection) {
+        ArrayList<StoredAt> result = new ArrayList<>();
 
         try {
             String query = "SELECT * FROM StoredAt";
@@ -79,7 +80,9 @@ public class StoredAtHandler implements ModelHandler {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                StoredAt storedAt = new StoredAt(rs.getInt("trainID"),rs.getString("stationName"));
+                StoredAt storedAt = new StoredAt(
+                        rs.getInt("trainID"),
+                        rs.getString("stationName"));
                 result.add(storedAt);
             }
 

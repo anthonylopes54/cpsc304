@@ -12,17 +12,17 @@ import java.util.ArrayList;
 
 public class Train_ExtraHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-    private final Connection connection;
+//    private final Connection connection;
     private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
     private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public Train_ExtraHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-        this.connection = dbHandler.getConnection();
+//        this.connection = dbHandler.getConnection();
     }
 
     @Override
-    public void insert(Model model) {
+    public void insert(Model model, Connection connection) {
         Train_Extra train_extra = (Train_Extra) model;
 
         try {
@@ -43,27 +43,27 @@ public class Train_ExtraHandler implements ModelHandler {
         }
     }
 
+    // primary key: (model, manufactureYear)
     @Override
-    public void update(Model model, String primaryKey) {
+    public void update(Model model, Connection connection) {
         // TODO
     }
 
-    // primaryKey: "model!manufactureYear"
     @Override
-    public void delete(String primaryKey) {
-        String[] splitKey = primaryKey.split("!");
-        String model = splitKey[0];
-        int manufactureYear = Integer.parseInt(splitKey[1]);
+    public void delete(Model model, Connection connection) {
+        Train_Extra train_extra = (Train_Extra) model;
+        String trainModel = train_extra.getModel();
+        int manufactureYear = train_extra.getManufactureYear();
 
         try {
             String query = "DELETE FROM Train_Extra WHERE (model, manufactureYear) = (?,?)";
             ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-            ps.setString(1, model);
+            ps.setString(1, trainModel);
             ps.setInt(2, manufactureYear);
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Train_Extra '(" + model + "," + manufactureYear + ")' does not exist!");
+                System.out.println(WARNING_TAG + " Train_Extra '(" + trainModel + "," + manufactureYear + ")' does not exist!");
             }
 
             connection.commit();
@@ -76,8 +76,8 @@ public class Train_ExtraHandler implements ModelHandler {
     }
 
     @Override
-    public Model[] getInfo() {
-        ArrayList<Train_Extra> result = new ArrayList<Train_Extra>();
+    public Model[] getInfo(Connection connection) {
+        ArrayList<Train_Extra> result = new ArrayList<>();
 
         try {
             String query = "SELECT * FROM Train_Extra";
@@ -85,7 +85,11 @@ public class Train_ExtraHandler implements ModelHandler {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                Train_Extra train_extra = new Train_Extra(rs.getString("model"),rs.getInt("manufactureYear"),rs.getInt("numSeats"),rs.getInt("numCars"));
+                Train_Extra train_extra = new Train_Extra(
+                        rs.getString("model"),
+                        rs.getInt("manufactureYear"),
+                        rs.getInt("numSeats"),
+                        rs.getInt("numCars"));
                 result.add(train_extra);
             }
 
