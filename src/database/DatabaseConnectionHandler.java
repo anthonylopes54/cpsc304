@@ -1,31 +1,21 @@
 package database;
 
-import constants.ModelType;
-import models.Drives;
+import util.Constants;
+import util.ModelType;
 import models.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DatabaseConnectionHandler {
-
-    // Use this version of the ORACLE_URL if you are running the code off of the server
-    //	private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
-    // Use this version of the ORACLE_URL if you are tunneling into the undergrad servers
-    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
-    private static final String EXCEPTION_TAG = "[EXCEPTION]";
-    private static final String WARNING_TAG = "[WARNING]";
-
     private Connection connection = null;
 
     public DatabaseConnectionHandler() {
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
@@ -34,15 +24,33 @@ public class DatabaseConnectionHandler {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+                System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             }
         }
     }
 
-    public void delete(ModelType type, int id) {
-        switch (type) {
-            case DRIVES -> {
+    public boolean login(String username, String password) {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
 
+            connection = DriverManager.getConnection(Constants.ORACLE_URL, username, password);
+            connection.setAutoCommit(false);
+
+            System.out.println("\nConnected to Oracle!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void delete(Model model, int id) {
+        switch (model.type) {
+            case DRIVES -> {
+                DrivesHandler drivesHandler = new DrivesHandler();
+                drivesHandler.delete(model, connection);
             }
             case TRIP -> {
 
@@ -51,13 +59,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                managesHandler.delete(model, connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                employeeHandler.delete(model, connection);
             }
             case MAINTAINS -> {
 
@@ -81,10 +91,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                goesThroughHandler.delete(model, connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cargo_belongsToHandler = new Cargo_BelongsToHandler();
+                cargo_belongsToHandler.delete(model, connection);
             }
             default -> {
                 // no-op
@@ -95,7 +107,8 @@ public class DatabaseConnectionHandler {
     public void insert(Model model) {
         switch (model.type) {
             case DRIVES -> {
-
+                DrivesHandler dh = new DrivesHandler();
+                dh.Insert(model, connection);
             }
             case TRIP -> {
 
@@ -104,13 +117,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                managesHandler.Insert(model, connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                employeeHandler.Insert(model, connection);
             }
             case MAINTAINS -> {
 
@@ -134,10 +149,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                goesThroughHandler.Insert(model, connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cbtHandler = new Cargo_BelongsToHandler();
+                cbtHandler.Insert(model, connection);
             }
             default -> {
                 // no-op
@@ -148,7 +165,8 @@ public class DatabaseConnectionHandler {
     public Model[] getInfo(ModelType type) {
         switch (type) {
             case DRIVES -> {
-
+                DrivesHandler drivesHandler = new DrivesHandler();
+                return drivesHandler.getInfo(connection);
             }
             case TRIP -> {
 
@@ -157,13 +175,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                return managesHandler.getInfo(connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                return employeeHandler.getInfo(connection);
             }
             case MAINTAINS -> {
 
@@ -187,10 +207,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                return goesThroughHandler.getInfo(connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cargo_belongsToHandler = new Cargo_BelongsToHandler();
+                return cargo_belongsToHandler.getInfo(connection);
             }
             default -> {
                 // no-op
@@ -199,10 +221,11 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
-    public void update(Model modal, int id) {
-        switch (modal.type) {
+    public void update(Model model, int id) {
+        switch (model.type) {
             case DRIVES -> {
-
+                DrivesHandler drivesHandler = new DrivesHandler();
+                drivesHandler.update(model, connection);
             }
             case TRIP -> {
 
@@ -211,13 +234,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                managesHandler.update(model, connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                employeeHandler.update(model, connection);
             }
             case MAINTAINS -> {
 
@@ -241,10 +266,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                goesThroughHandler.update(model, connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cargo_belongsToHandler = new Cargo_BelongsToHandler();
+                cargo_belongsToHandler.update(model, connection);
             }
             default -> {
                 // no-op

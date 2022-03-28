@@ -1,6 +1,6 @@
 package models;
 
-import constants.ModelType;
+import util.ModelType;
 
 public class Passenger extends Model {
     private final int passengerID;

@@ -2,9 +2,11 @@ package database;
 
 import models.Model;
 
+import java.sql.Connection;
+
 public interface ModelHandler {
-    void Insert(Model modal);
-    void update(Model modal, int id);
-    void delete(int id);
-    Model[] getInfo();
+    void Insert(Model model, Connection connection);
+    void update(Model model, Connection connection);
+    void delete(Model model, Connection connection);
+    Model[] getInfo(Connection connection);
 }

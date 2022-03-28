@@ -1,24 +1,22 @@
 package database;
-import models.Manages;
+
+import models.GoesThrough;
 import models.Model;
 import util.Constants;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
-public class ManagesHandler implements ModelHandler {
-
+public class GoesThroughHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "INSERT INTO Manages VALUES (?,?)";
+        GoesThrough goesThrough = (GoesThrough) model;
+        String query = "INSERT INTO GoesThrough VALUES (?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getEmpID());
-            ps.setInt(2, manages.getTrainID());
+            ps.setString(1, goesThrough.getStationName());
+            ps.setTimestamp(2, (Timestamp) goesThrough.getTimeOfStop()); // TODO: Is this a timestamp?
+            ps.setInt(3, goesThrough.getRouteID());
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -28,18 +26,21 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public void update(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "UPDATE Manages SET trainID = ? WHERE empID = ?";
+        GoesThrough goesThrough = (GoesThrough) model;
+        String query = "UPDATE GoesThrough SET timeOfStop = ? WHERE name = ? AND routeID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getTrainID());
-            ps.setInt(2, manages.getEmpID());
+            ps.setTimestamp(1, (Timestamp) goesThrough.getTimeOfStop()); // TODO
+            ps.setString(2, goesThrough.getStationName());
+            ps.setInt(3, goesThrough.getRouteID());
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Manages {empID: " +
-                                manages.getEmpID() +
+                                " GoesThrough {name: " +
+                                goesThrough.getStationName() +
+                                "; routeID: " +
+                                goesThrough.getRouteID() +
                                 "} does not exist!"
                 );
             }
@@ -52,17 +53,20 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public void delete(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "DELETE FROM Manages WHERE empID = ?";
+        GoesThrough goesThrough = (GoesThrough) model;
+        String query = "DELETE FROM GoesThrough WHERE name = ? AND routeID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getEmpID());
+            ps.setString(1, goesThrough.getStationName());
+            ps.setInt(2, goesThrough.getRouteID());
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Manages {empID: " +
-                                manages.getEmpID() +
+                                " GoesThrough {name: " +
+                                goesThrough.getStationName() +
+                                "; routeID: " +
+                                goesThrough.getRouteID() +
                                 "} does not exist!"
                 );
             }
@@ -74,24 +78,25 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        ArrayList<Manages> res = new ArrayList<>();
-        String query = "SELECT * FROM Manages";
+        ArrayList<GoesThrough> res = new ArrayList<>();
+        String query = "SELECT * FROM GoesThrough";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();
 
             while(resultSet.next()) {
-                Manages manages = new Manages(
-                        Integer.parseInt(resultSet.getString("empID")),
-                        Integer.parseInt(resultSet.getString("trainID"))
+                GoesThrough goesThrough = new GoesThrough(
+                        resultSet.getString("name"),
+                        resultSet.getDate("timeOfStop"),
+                        resultSet.getInt("routeID")
                 );
-                res.add(manages);
+                res.add(goesThrough);
             }
             resultSet.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-        return res.toArray(new Manages[0]);
+        return res.toArray(new GoesThrough[0]);
     }
 }
