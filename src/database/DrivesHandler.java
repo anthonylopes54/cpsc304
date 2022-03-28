@@ -6,7 +6,9 @@ import util.Constants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DrivesHandler implements ModelHandler {
     @Override
@@ -57,6 +59,24 @@ public class DrivesHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        return new Model[0];
+        ArrayList<Drives> res = new ArrayList<>();
+        String query = "SELECT * FROM Drives";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                Drives drives = new Drives(
+                        Integer.parseInt(resultSet.getString("empID")),
+                        Integer.parseInt(resultSet.getString("trainID"))
+                );
+                res.add(drives);
+            }
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return res.toArray(new Drives[0]);
     }
 }

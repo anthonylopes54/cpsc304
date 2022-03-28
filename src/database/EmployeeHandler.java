@@ -4,10 +4,8 @@ import models.Employee;
 import models.Model;
 import util.Constants;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class EmployeeHandler implements ModelHandler {
     @Override
@@ -89,6 +87,32 @@ public class EmployeeHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        return new Model[0];
+        ArrayList<Employee> res = new ArrayList<>();
+        String query = "SELECT * FROM Employee";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                Employee employee = new Employee(
+                        resultSet.getInt("empID"),
+                        resultSet.getString("name"),
+                        resultSet.getDate("dateOfBirth"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("salary"),
+                        resultSet.getString("specialization"),
+                        resultSet.getInt("freightCar"),
+                        resultSet.getDate("licenseExpiryDate"),
+                        resultSet.getInt("licenseNumber"),
+                        resultSet.getDate("certificationIssueDate")
+                );
+                res.add(employee);
+            }
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return res.toArray(new Employee[0]);
     }
 }

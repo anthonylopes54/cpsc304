@@ -165,7 +165,8 @@ public class DatabaseConnectionHandler {
     public Model[] getInfo(ModelType type) {
         switch (type) {
             case DRIVES -> {
-
+                DrivesHandler drivesHandler = new DrivesHandler();
+                return drivesHandler.getInfo(connection);
             }
             case TRIP -> {
 
@@ -174,13 +175,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                return managesHandler.getInfo(connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                return employeeHandler.getInfo(connection);
             }
             case MAINTAINS -> {
 
@@ -204,10 +207,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                return goesThroughHandler.getInfo(connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cargo_belongsToHandler = new Cargo_BelongsToHandler();
+                return cargo_belongsToHandler.getInfo(connection);
             }
             default -> {
                 // no-op

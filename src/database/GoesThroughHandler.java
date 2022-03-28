@@ -5,6 +5,7 @@ import models.Model;
 import util.Constants;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class GoesThroughHandler implements ModelHandler {
     @Override
@@ -77,6 +78,25 @@ public class GoesThroughHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        return new Model[0];
+        ArrayList<GoesThrough> res = new ArrayList<>();
+        String query = "SELECT * FROM GoesThrough";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                GoesThrough goesThrough = new GoesThrough(
+                        resultSet.getString("name"),
+                        resultSet.getDate("timeOfStop"),
+                        resultSet.getInt("routeID")
+                );
+                res.add(goesThrough);
+            }
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return res.toArray(new GoesThrough[0]);
     }
 }

@@ -6,7 +6,9 @@ import util.Constants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Cargo_BelongsToHandler implements ModelHandler {
     @Override
@@ -79,6 +81,25 @@ public class Cargo_BelongsToHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        return new Model[0];
+        ArrayList<Cargo_BelongsTo> res = new ArrayList<>();
+        String query = "SELECT * FROM Cargo_BelongsTo";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                Cargo_BelongsTo cargo_belongsTo = new Cargo_BelongsTo(
+                        Integer.parseInt(resultSet.getString("passengerID")),
+                        Integer.parseInt(resultSet.getString("cargoID")),
+                        Integer.parseInt(resultSet.getString("weight"))
+                );
+                res.add(cargo_belongsTo);
+            }
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return res.toArray(new Cargo_BelongsTo[0]);
     }
 }

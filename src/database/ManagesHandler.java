@@ -1,12 +1,13 @@
 package database;
-
 import models.Manages;
 import models.Model;
 import util.Constants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ManagesHandler implements ModelHandler {
 
@@ -73,6 +74,24 @@ public class ManagesHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        return new Model[0];
+        ArrayList<Manages> res = new ArrayList<>();
+        String query = "SELECT * FROM Manages";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                Manages manages = new Manages(
+                        Integer.parseInt(resultSet.getString("empID")),
+                        Integer.parseInt(resultSet.getString("trainID"))
+                );
+                res.add(manages);
+            }
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return res.toArray(new Manages[0]);
     }
 }
