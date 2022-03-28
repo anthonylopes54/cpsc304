@@ -14,20 +14,20 @@ CREATE TABLE Employee (
     PRIMARY KEY(empID)
 );
 
-CREATE TABLE Train_Main (
-    trainID INT,
-    model VARCHAR(20),
-    manufactureYear INT,
-    PRIMARY KEY (trainID),
-    FOREIGN KEY (model, manufactureYear) REFERENCES Train_Extra -- cascade??
+CREATE TABLE Train_Extra (
+                             model           VARCHAR(20),
+                             manufactureYear INT,
+                             numSeats        INT,
+                             numCars         INT,
+                             PRIMARY KEY (model, manufactureYear)
 );
 
-CREATE TABLE Train_Extra (
-    model VARCHAR(20),
+CREATE TABLE Train_Main (
+    trainID         INT,
+    model           VARCHAR(20),
     manufactureYear INT,
-    numSeats INT,
-    numCars INT,
-    PRIMARY KEY (model, manufactureYear)
+    PRIMARY KEY (trainID),
+    FOREIGN KEY (model, manufactureYear) REFERENCES Train_Extra On DELETE CASCADE
 );
 
 CREATE TABLE Manages (
@@ -68,18 +68,18 @@ CREATE TABLE Cargo_BelongsTo (
     FOREIGN KEY (passengerID) REFERENCES Passenger ON DELETE CASCADE
 );
 
+CREATE TABLE Seat_CarMapping (
+                                 seatNum INT,
+                                 carNum  INT NOT NULL,
+                                 PRIMARY KEY (seatNum)
+);
+
 CREATE TABLE Seat_Main (
     seatNum INT,
     trainID INT,
     class VARCHAR(20),
     PRIMARY KEY (seatNum, trainID),
-    FOREIGN KEY (seatNum) REFERENCES Seat_CarMapping -- cascade??
-);
-
-CREATE TABLE Seat_CarMapping (
-    seatNum INT,
-    carNum INT NOT NULL,
-    PRIMARY KEY (seatNum)
+    FOREIGN KEY (seatNum) REFERENCES Seat_CarMapping ON DELETE CASCADE
 );
 
 CREATE TABLE Route (
