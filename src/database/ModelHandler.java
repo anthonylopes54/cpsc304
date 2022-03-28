@@ -6,7 +6,7 @@ import java.sql.Connection;
 
 public interface ModelHandler {
     void Insert(Model model, Connection connection);
-    void update(Model model, int id, Connection connection);
-    void delete(int id, Connection connection);
+    void update(Model model, Connection connection);
+    void delete(Model model, Connection connection);
     Model[] getInfo(Connection connection);
 }

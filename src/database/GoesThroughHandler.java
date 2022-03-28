@@ -2,6 +2,7 @@ package database;
 
 import models.GoesThrough;
 import models.Model;
+import util.Constants;
 
 import java.sql.*;
 
@@ -9,7 +10,7 @@ public class GoesThroughHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
         GoesThrough goesThrough = (GoesThrough) model;
-        String query = "INSERT INTO goesThrough VALUES (?,?,?)";
+        String query = "INSERT INTO GoesThrough VALUES (?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, goesThrough.getStationName());
@@ -18,18 +19,38 @@ public class GoesThroughHandler implements ModelHandler {
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
     @Override
-    public void update(Model model, int id, Connection connection) {
+    public void update(Model model, Connection connection) {
 
     }
 
     @Override
-    public void delete(int id, Connection connection) {
-
+    public void delete(Model model, Connection connection) {
+        GoesThrough goesThrough = (GoesThrough) model;
+        String query = "DELETE FROM GoesThrough WHERE name = ? AND routeID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, goesThrough.getStationName());
+            ps.setInt(2, goesThrough.getRouteID());
+            int numOfRows = ps.executeUpdate();
+            if (numOfRows == 0) {
+                System.out.println(
+                        Constants.WARNING_TAG +
+                                " GoesThrough {name: " +
+                                goesThrough.getStationName() +
+                                "; routeID: " +
+                                goesThrough.getRouteID() +
+                                "} does not exist!"
+                );
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
     }
 
     @Override

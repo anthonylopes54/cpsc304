@@ -2,6 +2,7 @@ package database;
 
 import models.Employee;
 import models.Model;
+import util.Constants;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,7 +13,7 @@ public class EmployeeHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
         Employee employee = (Employee) model;
-        String query = "INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO Employee VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, employee.getEmpID());
@@ -28,18 +29,35 @@ public class EmployeeHandler implements ModelHandler {
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
     @Override
-    public void update(Model modal, int id, Connection connection) {
+    public void update(Model modal, Connection connection) {
 
     }
 
     @Override
-    public void delete(int id, Connection connection) {
-
+    public void delete(Model model, Connection connection) {
+        Employee employee = (Employee) model;
+        String query = "DELETE FROM Employee WHERE empID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, employee.getEmpID());
+            int numOfRows = ps.executeUpdate();
+            if (numOfRows == 0) {
+                System.out.println(
+                        Constants.WARNING_TAG +
+                                " Employee {empID: " +
+                                employee.getEmpID() +
+                                "} does not exist!"
+                );
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+        }
     }
 
     @Override

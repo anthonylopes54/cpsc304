@@ -46,10 +46,11 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void delete(ModelType type, int id) {
-        switch (type) {
+    public void delete(Model model, int id) {
+        switch (model.type) {
             case DRIVES -> {
-
+                DrivesHandler drivesHandler = new DrivesHandler();
+                drivesHandler.delete(model, connection);
             }
             case TRIP -> {
 
@@ -58,13 +59,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                managesHandler.delete(model, connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                employeeHandler.delete(model, connection);
             }
             case MAINTAINS -> {
 
@@ -88,10 +91,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                goesThroughHandler.delete(model, connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cargo_belongsToHandler = new Cargo_BelongsToHandler();
+                cargo_belongsToHandler.delete(model, connection);
             }
             default -> {
                 // no-op
