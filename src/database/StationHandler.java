@@ -24,6 +24,7 @@ public class StationHandler implements ModelHandler {
     @Override
     public void insert(Model model) {
         Station station = (Station) model;
+
         try {
             String query = "INSERT INTO Station VALUES (?,?)";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
@@ -48,14 +49,16 @@ public class StationHandler implements ModelHandler {
     // primaryKey for Station is name
     @Override
     public void delete(String primaryKey) {
+        String name = primaryKey;
+
         try {
             String query = "DELETE FROM Station WHERE name = ?";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-            ps.setString(1, primaryKey);
+            ps.setString(1, name);
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Station '" + primaryKey + "' does not exist!");
+                System.out.println(WARNING_TAG + " Station '" + name + "' does not exist!");
             }
 
             connection.commit();
