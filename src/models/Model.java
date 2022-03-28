@@ -1,6 +1,6 @@
 package models;
 
-import constants.ModelType;
+import util.ModelType;
 
 public abstract class Model {
     public ModelType type;

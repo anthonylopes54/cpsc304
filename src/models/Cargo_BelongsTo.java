@@ -1,6 +1,8 @@
 package models;
 
-public class Cargo_BelongsTo {
+import util.ModelType;
+
+public class Cargo_BelongsTo extends Model {
     private final int passengerID;
     private final int cargoID;
     private final int weight;
@@ -9,6 +11,7 @@ public class Cargo_BelongsTo {
         this.passengerID = passengerID;
         this.cargoID = cargoID;
         this.weight = weight;
+        this.type = ModelType.CARGO_BELONGS_TO;
     }
 
     public int getPassengerID() {

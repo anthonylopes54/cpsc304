@@ -1,21 +1,22 @@
 package database;
 
-import models.Drives;
+import models.Cargo_BelongsTo;
 import models.Model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DrivesHandler implements ModelHandler {
+public class Cargo_BelongsToHandler implements ModelHandler {
     @Override
-    public void Insert(Model modal, Connection connection) {
-        Drives drives = (Drives) modal;
-        String query = "INSERT INTO drives VALUES (?,?)";
+    public void Insert(Model model, Connection connection) {
+        Cargo_BelongsTo cbt = (Cargo_BelongsTo) model;
+        String query = "INSERT INTO cargo_belongsTo VALUES (?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, drives.getEmpID());
-            ps.setInt(2, drives.getTrainID());
+            ps.setInt(1, cbt.getPassengerID());
+            ps.setInt(2, cbt.getCargoID());
+            ps.setInt(3, cbt.getWeight());
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -24,7 +25,7 @@ public class DrivesHandler implements ModelHandler {
     }
 
     @Override
-    public void update(Model modal, int id, Connection connection) {
+    public void update(Model model, int id, Connection connection) {
 
     }
 

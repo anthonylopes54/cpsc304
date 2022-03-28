@@ -1,31 +1,21 @@
 package database;
 
-import constants.ModelType;
-import models.Drives;
+import util.Constants;
+import util.ModelType;
 import models.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DatabaseConnectionHandler {
-
-    // Use this version of the ORACLE_URL if you are running the code off of the server
-    //	private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
-    // Use this version of the ORACLE_URL if you are tunneling into the undergrad servers
-    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
-    private static final String EXCEPTION_TAG = "[EXCEPTION]";
-    private static final String WARNING_TAG = "[WARNING]";
-
     private Connection connection = null;
 
     public DatabaseConnectionHandler() {
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
@@ -34,7 +24,7 @@ public class DatabaseConnectionHandler {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+                System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             }
         }
     }
@@ -45,13 +35,13 @@ public class DatabaseConnectionHandler {
                 connection.close();
             }
 
-            connection = DriverManager.getConnection(ORACLE_URL, username, password);
+            connection = DriverManager.getConnection(Constants.ORACLE_URL, username, password);
             connection.setAutoCommit(false);
 
             System.out.println("\nConnected to Oracle!");
             return true;
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             return false;
         }
     }
@@ -112,7 +102,8 @@ public class DatabaseConnectionHandler {
     public void insert(Model model) {
         switch (model.type) {
             case DRIVES -> {
-
+                DrivesHandler dh = new DrivesHandler();
+                dh.Insert(model, connection);
             }
             case TRIP -> {
 
@@ -121,13 +112,15 @@ public class DatabaseConnectionHandler {
 
             }
             case MANAGES -> {
-
+                ManagesHandler managesHandler = new ManagesHandler();
+                managesHandler.Insert(model, connection);
             }
             case STATION -> {
 
             }
             case EMPLOYEE -> {
-
+                EmployeeHandler employeeHandler = new EmployeeHandler();
+                employeeHandler.Insert(model, connection);
             }
             case MAINTAINS -> {
 
@@ -151,10 +144,12 @@ public class DatabaseConnectionHandler {
 
             }
             case GOES_THROUGH -> {
-
+                GoesThroughHandler goesThroughHandler = new GoesThroughHandler();
+                goesThroughHandler.Insert(model, connection);
             }
             case CARGO_BELONGS_TO -> {
-
+                Cargo_BelongsToHandler cbtHandler = new Cargo_BelongsToHandler();
+                cbtHandler.Insert(model, connection);
             }
             default -> {
                 // no-op

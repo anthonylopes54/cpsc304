@@ -1,23 +1,24 @@
 package database;
 
-import models.Manages;
+import models.GoesThrough;
 import models.Model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
-public class ManagesHandler implements ModelHandler {
-
+public class GoesThroughHandler implements ModelHandler {
     @Override
     public void Insert(Model model, Connection connection) {
-        Manages manages = (Manages) model;
-        String query = "INSERT INTO manages VALUES (?,?)";
+        GoesThrough goesThrough = (GoesThrough) model;
+        String query = "INSERT INTO goesThrough VALUES (?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, manages.getEmpID());
-            ps.setInt(2, manages.getTrainID());
+            ps.setString(1, goesThrough.getStationName());
+            ps.setTimestamp(2, (Timestamp) goesThrough.getTimeOfStop()); // TODO: Is this a timestamp?
+            ps.setInt(3, goesThrough.getRouteID());
             ps.executeUpdate();
             connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
