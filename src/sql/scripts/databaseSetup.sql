@@ -15,16 +15,16 @@ CREATE TABLE Employee (
 );
 
 CREATE TABLE Train_Extra (
-                             model           VARCHAR(20),
-                             manufactureYear INT,
-                             numSeats        INT,
-                             numCars         INT,
-                             PRIMARY KEY (model, manufactureYear)
+    model VARCHAR(20),
+    manufactureYear INT,
+    numSeats INT,
+    numCars INT,
+    PRIMARY KEY (model, manufactureYear)
 );
 
 CREATE TABLE Train_Main (
-    trainID         INT,
-    model           VARCHAR(20),
+    trainID INT,
+    model VARCHAR(20),
     manufactureYear INT,
     PRIMARY KEY (trainID),
     FOREIGN KEY (model, manufactureYear) REFERENCES Train_Extra On DELETE CASCADE
@@ -69,9 +69,9 @@ CREATE TABLE Cargo_BelongsTo (
 );
 
 CREATE TABLE Seat_CarMapping (
-                                 seatNum INT,
-                                 carNum  INT NOT NULL,
-                                 PRIMARY KEY (seatNum)
+    seatNum INT,
+    carNum INT NOT NULL,
+    PRIMARY KEY (seatNum)
 );
 
 CREATE TABLE Seat_Main (

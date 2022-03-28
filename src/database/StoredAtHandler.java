@@ -5,6 +5,7 @@ import models.StoredAt;
 import util.Constants;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class StoredAtHandler implements ModelHandler {
 
         try {
             String query = "INSERT INTO StoredAt VALUES (?,?)";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, storedAt.getTrainID());
             ps.setString(2, storedAt.getStationName());
 
@@ -45,7 +46,7 @@ public class StoredAtHandler implements ModelHandler {
 
         try {
             String query = "UPDATE StoredAt SET stationName = ? WHERE trainID = ?";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(2, trainID);
             ps.setString(1, stationName);
 
@@ -71,7 +72,7 @@ public class StoredAtHandler implements ModelHandler {
 
         try {
             String query = "DELETE FROM StoredAt WHERE trainID = ?";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, trainID);
 
             int rowCount = ps.executeUpdate();
@@ -94,7 +95,7 @@ public class StoredAtHandler implements ModelHandler {
 
         try {
             String query = "SELECT * FROM StoredAt";
-            ca.ubc.cs304.util.PrintablePreparedStatement ps = new ca.ubc.cs304.util.PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
