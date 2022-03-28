@@ -40,13 +40,8 @@ public class TripHandler implements ModelHandler {
     // primaryKey: (seatNum, routeID, passengerID, trainID)
     @Override
     public void update(Model model, Connection connection) {
-        Trip trip = (Trip) model;
-        int seatNum = trip.getSeatNum();
-        int routeID = trip.getRouteID();
-        int passengerID = trip.getPassengerID();
-        int trainID = trip.getTrainID();
-
         // every field is part of the key, therefore we can't do any updates
+        System.out.println(Constants.WARNING_TAG + "cannot update tuples in Trip table, every field is part of the primary key!");
     }
 
     // primaryKey: (seatNum, routeID, passengerID, trainID)
