@@ -1,9 +1,8 @@
 package database;
 
-import models.Drives;
-import models.Maintains;
 import models.Model;
-import models.Passenger;
+import models.Seat_CarMapping;
+import models.Seat_Main;
 import util.Constants;
 
 import java.sql.Connection;
@@ -12,17 +11,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PassengerHandler implements ModelHandler {
+public class Seat_MainHandler implements ModelHandler{
     @Override
     public void Insert(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "INSERT INTO Passenger VALUES (?,?)";
+        Seat_Main seat_main = (Seat_Main) model;
+        String query = "INSERT INTO Seat_Main VALUES (?,?,?)";
         try {
+
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, passenger.getPassengerID());
-            ps.setString(2, passenger.getName());
+
+            ps.setInt(1,seat_main.getSeatNum());
+            ps.setInt(2, seat_main.getTrainID());
+            ps.setString(3, seat_main.getClass_());
+
+
             ps.executeUpdate();
             connection.commit();
+
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
@@ -30,19 +35,22 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public void update(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "UPDATE Passenger SET name = ?, WHERE passengerID = ?";
+        Seat_Main seat_main = (Seat_Main) model;
+        String query = "UPDATE Seat_Main SET class = ?, WHERE seatNum = ? AND trainID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, passenger.getName());
-            ps.setInt(2, passenger.getPassengerID());
+
+            ps.setString(1, seat_main.getClass_());
+            ps.setInt(2,seat_main.getSeatNum());
+            ps.setInt(3, seat_main.getTrainID());
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Passenger {passengerID: " +
-                                passenger.getPassengerID() +
+                                " Seat_main {seatNum: " +
+                                seat_main.getSeatNum() + " AND trainID" +
+                                seat_main.getTrainID() +
                                 "} does not exist!"
                 );
             }
@@ -56,21 +64,24 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public void delete(Model model, Connection connection) {
-        Passenger passenger = (Passenger) model;
-        String query = "DELETE FROM Passenger WHERE passengerID = ?";
+        Seat_Main seat_main = (Seat_Main) model;
+        String query = "DELETE FROM Seat_Main WHERE seatNum = ? AND trainID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, passenger.getPassengerID());
+            ps.setInt(1,seat_main.getSeatNum());
+            ps.setInt(2, seat_main.getTrainID());
 
             int numOfRows = ps.executeUpdate();
             if (numOfRows == 0) {
                 System.out.println(
                         Constants.WARNING_TAG +
-                                " Passenger {empID: " +
-                                passenger.getPassengerID() +
+                                " Seat_main {seatNum: " +
+                                seat_main.getSeatNum() + " AND trainID" +
+                                seat_main.getTrainID() +
                                 "} does not exist!"
                 );
             }
+
             connection.commit();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
@@ -79,25 +90,26 @@ public class PassengerHandler implements ModelHandler {
 
     @Override
     public Model[] getInfo(Connection connection) {
-        ArrayList<Passenger> res = new ArrayList<>();
-        String query = "SELECT * FROM Passenger";
+        ArrayList<Seat_Main> res = new ArrayList<>();
+        String query = "SELECT * FROM Seat_car";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();
 
             while(resultSet.next()) {
-                Passenger passenger = new Passenger(
-                        resultSet.getInt("passengerID"),
-                        resultSet.getString("name")
+                Seat_Main seat_Main = new Seat_Main(
+                        (resultSet.getInt("seatNum")),
+                        (resultSet.getInt("trainID")),
+                        resultSet.getString("class")
                 );
-                res.add(passenger);
+                res.add(seat_Main);
             }
             resultSet.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
-        return res.toArray(new Passenger[0]);
+        return res.toArray(new Seat_Main[0]);
 
     }
 }

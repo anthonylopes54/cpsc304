@@ -1,8 +1,10 @@
 package models;
 
+import util.ModelType;
+
 import java.sql.Date;
 
-public class Route {
+public class Route extends Model{
     private final int routeID;
     private final String departureStation;
     private final String destinationStation;
@@ -18,6 +20,8 @@ public class Route {
         this.tripDistance = tripDistance;
         this.estimatedDuration = estimatedDuration;
         this.departureTime = departureTime;
+        this.type = ModelType.ROUTE;
+
     }
 
     public int getRouteID() {
