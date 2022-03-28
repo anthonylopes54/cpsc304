@@ -1,6 +1,6 @@
 package models;
 
-import constants.ModelType;
+import util.ModelType;
 
 public class Trip extends Model {
     private final int seatNum;

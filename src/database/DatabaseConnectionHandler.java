@@ -2,10 +2,7 @@ package database;
 
 import util.Constants;
 import util.ModelType;
-import constants.ModelType;
 import models.Model;
-import models.Station;
-import models.Trip;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -57,7 +54,7 @@ public class DatabaseConnectionHandler {
             }
             case TRIP -> {
                 TripHandler tripHandler = new TripHandler(this);
-                tripHandler.delete(model);
+                tripHandler.delete(model, connection);
             }
             case ROUTE -> {
 
@@ -306,19 +303,8 @@ public class DatabaseConnectionHandler {
         try  {
             connection.rollback();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
-//    public Connection getConnection() {
-//        return connection;
-//    }
-//
-    public static String getExceptionTag() {
-        return EXCEPTION_TAG;
-    }
-
-    public static String getWarningTag() {
-        return WARNING_TAG;
-    }
 }

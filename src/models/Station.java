@@ -1,6 +1,6 @@
 package models;
 
-import constants.ModelType;
+import util.ModelType;
 
 public class Station extends Model {
     private final String name;

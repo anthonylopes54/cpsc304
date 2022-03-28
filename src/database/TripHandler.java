@@ -4,6 +4,7 @@ import models.Model;
 import models.Station;
 import models.Train_Extra;
 import models.Trip;
+import util.Constants;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,13 +13,9 @@ import java.util.ArrayList;
 
 public class TripHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-//    private final Connection connection;
-    private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
-    private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public TripHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-//        this.connection = dbHandler.getConnection();
     }
 
     @Override
@@ -38,7 +35,7 @@ public class TripHandler implements ModelHandler {
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             dbHandler.rollbackConnection();
         }
     }
@@ -67,14 +64,14 @@ public class TripHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Trip '(" + seatNum + "," + routeID + "," + passengerID + "," + trainID + ")' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " Trip '(" + seatNum + "," + routeID + "," + passengerID + "," + trainID + ")' does not exist!");
             }
 
             connection.commit();
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             dbHandler.rollbackConnection();
         }
     }
@@ -100,7 +97,7 @@ public class TripHandler implements ModelHandler {
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
 
         return result.toArray(new Trip[result.size()]);

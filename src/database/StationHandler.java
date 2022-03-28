@@ -9,16 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import ca.ubc.cs304.util.PrintablePreparedStatement;
+import util.Constants;
 
 public class StationHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-//    private final Connection connection;
-    private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
-    private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public StationHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-//        this.connection = dbHandler.getConnection();
     }
 
     @Override
@@ -36,7 +33,7 @@ public class StationHandler implements ModelHandler {
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             dbHandler.rollbackConnection();
         }
     }
@@ -59,14 +56,14 @@ public class StationHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Station '" + name + "' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " Station '" + name + "' does not exist!");
             }
 
             connection.commit();
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             dbHandler.rollbackConnection();
         }
     }
@@ -90,7 +87,7 @@ public class StationHandler implements ModelHandler {
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
 
         return result.toArray(new Station[result.size()]);

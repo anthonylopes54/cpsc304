@@ -3,6 +3,8 @@ package database;
 import models.Model;
 import models.Station;
 import models.Train_Main;
+import oracle.jdbc.driver.Const;
+import util.Constants;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,13 +13,9 @@ import java.util.ArrayList;
 
 public class Train_MainHandler implements ModelHandler {
     private final DatabaseConnectionHandler dbHandler;
-//    private final Connection connection;
-    private static final String EXCEPTION_TAG = DatabaseConnectionHandler.getExceptionTag();
-    private static final String WARNING_TAG = DatabaseConnectionHandler.getWarningTag();
 
     public Train_MainHandler(DatabaseConnectionHandler dbHandler) {
         this.dbHandler = dbHandler;
-//        this.connection = dbHandler.getConnection();
     }
 
     @Override
@@ -36,7 +34,7 @@ public class Train_MainHandler implements ModelHandler {
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             dbHandler.rollbackConnection();
         }
     }
@@ -59,14 +57,14 @@ public class Train_MainHandler implements ModelHandler {
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Train_Main '" + trainID + "' does not exist!");
+                System.out.println(Constants.WARNING_TAG + " Train_Main '" + trainID + "' does not exist!");
             }
 
             connection.commit();
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
             dbHandler.rollbackConnection();
         }
     }
@@ -91,7 +89,7 @@ public class Train_MainHandler implements ModelHandler {
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
 
         return result.toArray(new Train_Main[result.size()]);    }

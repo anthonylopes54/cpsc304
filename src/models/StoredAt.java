@@ -1,6 +1,6 @@
 package models;
 
-import constants.ModelType;
+import util.ModelType;
 
 public class StoredAt extends Model {
     private final int trainID;
