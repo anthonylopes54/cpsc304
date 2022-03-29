@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class RouteHandler implements ModelHandler {
 
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Route route = (Route) model;
         String query = "INSERT INTO Route VALUES (?,?,?,?,?,?)";
         try {

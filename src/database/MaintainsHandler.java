@@ -13,7 +13,7 @@ import java.sql.Connection;
 public class MaintainsHandler implements ModelHandler{
 
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Maintains maintains = (Maintains) model;
         String query = "INSERT INTO Maintains VALUES (?,?)";
         try {

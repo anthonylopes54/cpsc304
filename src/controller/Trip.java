@@ -2,10 +2,7 @@ package controller;
 
 import database.DatabaseConnectionHandler;
 
-import java.sql.ResultSet;
 import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Trip {
     private DatabaseConnectionHandler dbHandler;

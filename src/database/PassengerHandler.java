@@ -16,7 +16,7 @@ import java.sql.Connection;
 
 public class PassengerHandler implements ModelHandler {
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Passenger passenger = (Passenger) model;
         String query = "INSERT INTO Passenger VALUES (?,?)";
         try {
