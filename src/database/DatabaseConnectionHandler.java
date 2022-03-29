@@ -492,4 +492,31 @@ public class DatabaseConnectionHandler {
             return null;
         }
     }
+
+    public String getEmployeeProjection() {
+        String query = "SELECT empID, name, specialization, salary, email FROM Employee";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while (rs.next()) {
+                sb.append("empID: " +
+                        rs.getInt("empID") +
+                        "| name: " +
+                        rs.getString("name") +
+                        "| specialization: " +
+                        rs.getString("specialization") +
+                        "| salary: " +
+                        rs.getInt("salary") +
+                        "| email: " +
+                        rs.getString("email") +
+                        "\n");
+            }
+            return sb.toString();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
 }

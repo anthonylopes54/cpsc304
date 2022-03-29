@@ -16,6 +16,10 @@ public class Trip {
         dbHandler = new DatabaseConnectionHandler();
     }
 
+    public String projectionQuery() {
+        return dbHandler.getEmployeeProjection();
+    }
+
     public int aggregationQuery(int trainID, int routeID) {
         return dbHandler.getNumPassengers(trainID, routeID);
     }
