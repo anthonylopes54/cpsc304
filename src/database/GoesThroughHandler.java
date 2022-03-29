@@ -15,7 +15,7 @@ public class GoesThroughHandler implements ModelHandler {
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, goesThrough.getStationName());
-            ps.setTimestamp(2, (Timestamp) goesThrough.getTimeOfStop()); // TODO: Is this a timestamp?
+            ps.setTimestamp(2, goesThrough.getTimeOfStop());
             ps.setInt(3, goesThrough.getRouteID());
             ps.executeUpdate();
             connection.commit();
@@ -30,7 +30,7 @@ public class GoesThroughHandler implements ModelHandler {
         String query = "UPDATE GoesThrough SET timeOfStop = ? WHERE name = ? AND routeID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setTimestamp(1, (Timestamp) goesThrough.getTimeOfStop()); // TODO
+            ps.setTimestamp(1, goesThrough.getTimeOfStop());
             ps.setString(2, goesThrough.getStationName());
             ps.setInt(3, goesThrough.getRouteID());
             int numOfRows = ps.executeUpdate();
@@ -87,7 +87,7 @@ public class GoesThroughHandler implements ModelHandler {
             while(resultSet.next()) {
                 GoesThrough goesThrough = new GoesThrough(
                         resultSet.getString("name"),
-                        resultSet.getDate("timeOfStop"),
+                        resultSet.getTimestamp("timeOfStop"),
                         resultSet.getInt("routeID")
                 );
                 res.add(goesThrough);

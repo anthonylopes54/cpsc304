@@ -2,14 +2,15 @@ package models;
 
 import util.ModelType;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class GoesThrough extends Model {
     private final String stationName;
-    private final Date timeOfStop;
+    private final Timestamp timeOfStop;
     private final int routeID;
 
-    public GoesThrough(String stationName, Date timeOfStop, int routeID) {
+    public GoesThrough(String stationName, Timestamp timeOfStop, int routeID) {
         this.stationName = stationName;
         this.timeOfStop = timeOfStop;
         this.routeID = routeID;
@@ -20,7 +21,7 @@ public class GoesThrough extends Model {
         return stationName;
     }
 
-    public Date getTimeOfStop() {
+    public Timestamp getTimeOfStop() {
         return timeOfStop;
     }
 
