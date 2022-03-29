@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Trip {
     private DatabaseConnectionHandler dbHandler = null;
-    private int uniqueID = 0;
+    private int uniqueID = 2000;
 
     public Trip() {
         dbHandler = new DatabaseConnectionHandler();

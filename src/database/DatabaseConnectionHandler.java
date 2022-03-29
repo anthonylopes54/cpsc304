@@ -350,16 +350,16 @@ public class DatabaseConnectionHandler {
             StringBuilder sb = new StringBuilder();
 
             while(rs.next()) {
-                String statement = rs.getString("trainId") + ", ";
+                String statement = rs.getString("trainId: {") + ", ";
                 sb.append(statement);
             }
 
             rs.close();
             ps.close();
-            String result = "Train Ids: " + sb;
+            String result = "Train Ids: " + sb + "}";
             // It's a subset to remove the last + ", "
 
-            return result.substring(0, result.length()-2);
+            return result;
 
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
