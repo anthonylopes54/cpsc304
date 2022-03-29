@@ -45,7 +45,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void delete(Model model, int id) {
+    public void delete(Model model) {
         switch (model.type) {
             case DRIVES -> {
                 DrivesHandler drivesHandler = new DrivesHandler();
@@ -258,7 +258,7 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
-    public void update(Model model, int id) {
+    public void update(Model model) {
         switch (model.type) {
             case DRIVES -> {
                 DrivesHandler drivesHandler = new DrivesHandler();
