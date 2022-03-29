@@ -1,15 +1,11 @@
 package database;
 
-import models.Route;
-import models.Seat_CarMapping;
-import models.Seat_Main;
+import models.*;
 import util.Constants;
 import util.ModelType;
-import models.Model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Date;
 
 public class DatabaseConnectionHandler {
     private Connection connection = null;
@@ -312,4 +308,68 @@ public class DatabaseConnectionHandler {
             }
         }
     }
+
+    public void addPassenger(int passengerID, String name) {
+        // !TODO we could make handlers global instead of creating new instances each time we need to use them no?
+
+        PassengerHandler ps = new PassengerHandler();
+        Passenger newPassenger = new Passenger(passengerID, name);
+        ps.Insert(newPassenger, connection);
+
+    }
+
+    public void deletePassenger(int passengerID) {
+
+        PassengerHandler ps = new PassengerHandler();
+        Passenger newPassenger = new Passenger(passengerID, "");
+        ps.delete(newPassenger, connection);
+
+    }
+
+    public void updateEmployee(int empID, String name, java.util.Date date, String email, int salary,
+                               String specialization, int freightCar, java.util.Date licenseExpiryDate,
+                               int licenseNumber, Date certificationIssueDate) {
+
+        EmployeeHandler eh = new EmployeeHandler();
+
+        Employee newEmp = new Employee(empID, name, date, email, salary,
+         specialization, freightCar, licenseExpiryDate,
+         licenseNumber, certificationIssueDate);
+
+        eh.update(newEmp, connection);
+
+    }
+
+    public String getTrainsByModel(String model) {
+
+        String query = "SELECT trainID FROM Train WHERE model = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, model);
+            ResultSet rs = ps.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while(rs.next()) {
+                String statement = rs.getString("trainId") + ", ";
+                sb.append(statement);
+            }
+
+            rs.close();
+            ps.close();
+            String result = "Train Ids: " + sb;
+            // It's a subset to remove the last + ", "
+
+            return result.substring(0, result.length()-2);
+
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+
+
+
+    }
+
+
 }
