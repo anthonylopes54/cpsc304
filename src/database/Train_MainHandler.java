@@ -114,5 +114,6 @@ public class Train_MainHandler implements ModelHandler {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
 
-        return result.toArray(new Train_Main[result.size()]);    }
+        return result.toArray(new Train_Main[result.size()]);
+    }
 }
