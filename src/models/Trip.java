@@ -1,6 +1,8 @@
 package models;
 
-public class Trip {
+import util.ModelType;
+
+public class Trip extends Model {
     private final int seatNum;
     private final int routeID;
     private final int passengerID;
@@ -11,6 +13,7 @@ public class Trip {
         this.routeID = routeID;
         this.passengerID = passengerID;
         this.trainID = trainID;
+        this.type = ModelType.TRIP;
     }
 
     public int getSeatNum() {

@@ -8,11 +8,31 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Trip {
-    private DatabaseConnectionHandler dbHandler = null;
+    private DatabaseConnectionHandler dbHandler;
     private int uniqueID = 0;
+
+    public static void main(String[] args) {
+
+    }
 
     public Trip() {
         dbHandler = new DatabaseConnectionHandler();
+    }
+
+    public int aggregationQuery(int trainID, int routeID) {
+        return dbHandler.getNumPassengers(trainID, routeID);
+    }
+
+    public String nestedAggregationQuery() {
+        return dbHandler.getNumEmployeesByTrain();
+    }
+
+    public String joinQuery(String passengerId) {
+        return dbHandler.getCargo(Integer.parseInt(passengerId));
+    }
+
+    public String divisionQuery() {
+        return dbHandler.getRoutesThatGoThroughAllStations();
     }
 
     public void insertQuery(String name) {
@@ -41,9 +61,5 @@ public class Trip {
 
     public int getUniqueID(){
         return uniqueID++;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

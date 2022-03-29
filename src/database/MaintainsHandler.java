@@ -7,6 +7,8 @@ import util.Constants;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.sql.Connection;
+
 
 public class MaintainsHandler implements ModelHandler{
 
@@ -24,6 +26,7 @@ public class MaintainsHandler implements ModelHandler{
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
     }
+
 
     @Override
     public void update(Model model, Connection connection) {
@@ -74,6 +77,7 @@ public class MaintainsHandler implements ModelHandler{
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
         }
         return res.toArray(new Maintains[0]);
+
 
     }
 }
