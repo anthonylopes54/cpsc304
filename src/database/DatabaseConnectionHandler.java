@@ -384,4 +384,48 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
+    public String getCargo(int passengerId) {
+        String query = "SELECT p.NAME, c.CARGOID, c.WEIGHT FROM PASSENGER p, CARGO_BELONGSTO c WHERE p.PASSENGERID = c.PASSENGERID AND p.PASSENGERID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, passengerId);
+            ResultSet rs = ps.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while(rs.next()) {
+                sb.append(
+                        "Name: " +
+                                rs.getString("name") +
+                                "| Cargo ID: " +
+                                rs.getInt("cargoID") +
+                                "| Weight: " +
+                                rs.getString("weight") +
+                                "\n"
+                );
+            }
+            rs.close();
+            ps.close();
+            return sb.toString();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String getRoutesThatGoThroughAllStations() {
+        String query = "SELECT routeID FROM GoesThrough G WHERE NOT EXISTS ((SELECT S.name FROM Station S) MINUS (SELECT S1.name FROM Station S1 WHERE G.stationName = S1.name))";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while(rs.next()) {
+                sb.append("Route ID: " + rs.getInt("routeId") + "\n");
+            }
+            return sb.toString();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
 }
