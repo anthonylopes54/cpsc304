@@ -341,8 +341,7 @@ public class DatabaseConnectionHandler {
     }
 
     public String getTrainsByModel(String model) {
-
-        String query = "SELECT trainID FROM Train WHERE model = ?";
+        String query = "SELECT trainID FROM Train_Main WHERE model = ?";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);

@@ -129,3 +129,11 @@ CREATE TABLE StoredAt (
 
 -- insert tuples into tables:
 
+INSERT INTO Train_Extra VALUES ('General GP40-3507', 1971, 100, 2);
+INSERT INTO Train_Extra VALUES ('Bachmann 01205', 2022, 32, 1);
+
+
+INSERT INTO Train_Main VALUES (201, 'General GP40-3507', 1971);
+INSERT INTO Train_Main VALUES (202, 'Bachmann 01205', 2022);
+
+
