@@ -1,16 +1,11 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
-import util.Constants;
-
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class Trip {
     private static DatabaseConnectionHandler dbHandler;
-    private int uniqueID = 0;
+    private int uniqueID = 1000;
 
     public static void main(String[] args) {
         dbHandler = new DatabaseConnectionHandler();
