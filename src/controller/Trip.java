@@ -1,18 +1,22 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
+import util.Constants;
 
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Trip {
-    private DatabaseConnectionHandler dbHandler;
+    private static DatabaseConnectionHandler dbHandler;
     private int uniqueID = 0;
 
     public static void main(String[] args) {
-
+        dbHandler = new DatabaseConnectionHandler();
+        dbHandler.login("ORA_ALOPES02", "a24280836");
     }
 
     public Trip() {

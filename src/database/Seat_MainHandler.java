@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Seat_MainHandler implements ModelHandler{
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Seat_Main seat_main = (Seat_Main) model;
         String query = "INSERT INTO Seat_Main VALUES (?,?,?)";
         try {

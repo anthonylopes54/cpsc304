@@ -125,7 +125,7 @@ public class DatabaseConnectionHandler {
             }
             case ROUTE -> {
                 RouteHandler routeHandler = new RouteHandler();
-                routeHandler.Insert(model, connection);
+                routeHandler.insert(model, connection);
             }
             case MANAGES -> {
                 ManagesHandler managesHandler = new ManagesHandler();
@@ -141,22 +141,22 @@ public class DatabaseConnectionHandler {
             }
             case MAINTAINS -> {
                 MaintainsHandler maintainsHandler = new MaintainsHandler();
-                maintainsHandler.Insert(model, connection);
+                maintainsHandler.insert(model, connection);
 
             }
             case PASSENGER -> {
                 PassengerHandler passengerHandler = new PassengerHandler();
-                passengerHandler.Insert(model, connection);
+                passengerHandler.insert(model, connection);
 
             }
             case SEAT_MAIN -> {
                 Seat_MainHandler seat_mainHandler = new Seat_MainHandler();
-                seat_mainHandler.Insert(model, connection);
+                seat_mainHandler.insert(model, connection);
 
             }
             case SEAT_CAR_MAPPING -> {
                 Seat_CarMappingHandler seat_CarMappingHandler = new Seat_CarMappingHandler();
-                seat_CarMappingHandler.Insert(model, connection);
+                seat_CarMappingHandler.insert(model, connection);
 
             }
             case STORED_AT -> {
@@ -334,7 +334,7 @@ public class DatabaseConnectionHandler {
 
         PassengerHandler ps = new PassengerHandler();
         Passenger newPassenger = new Passenger(passengerID, name);
-        ps.Insert(newPassenger, connection);
+        ps.insert(newPassenger, connection);
 
     }
 
