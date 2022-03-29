@@ -129,10 +129,22 @@ CREATE TABLE StoredAt (
 );
 
 INSERT INTO Employee VALUES (1, 'Joe Boe', 'ATTENDANT', 35000, TO_DATE('09-06-1999', 'MM-DD-YYYY'), 'jboe@gmail.com', 2, NULL, NULL, NULL);
-INSERT INTO Employee VALUES (2, 'John Smith', NULL, 14531, TO_DATE('03-02-1992', 'MM-DD-YYYY'), 'johnsmith@gmail.com', NULL, NULL, NULL, NULL);
-INSERT INTO Employee VALUES (3, 'Jane Doe', NULL, 23521, TO_DATE('03-15-1988', 'MM-DD-YYYY'), 'jd88@gmail.com', NULL, NULL, NULL, NULL);
-INSERT INTO Employee VALUES (4, 'Sebastien Gonzales', 'MECHANIC', 64124, TO_DATE('12-12-1978', 'MM-DD-YYYY'), 'sg@canadarail.com', NULL, TO_DATE('10-12-2023', 'MM-DD-YYYY'), 6589, NULL);
-INSERT INTO Employee VALUES (5, 'Maria Mayer', 'CONDUCTOR', 55231, TO_DATE('10-16-1977', 'MM-DD-YYYY'), 'm77@terra.com', NULL, NULL, 4484763, TO_DATE('03-20-2000', 'MM-DD-YYYY'));
+INSERT INTO Employee VALUES (2, 'John Smith', 'ATTENDANT', 14531, TO_DATE('03-02-1992', 'MM-DD-YYYY'), 'johnsmith@gmail.com', NULL, NULL, NULL, NULL);
+INSERT INTO Employee VALUES (3, 'Jane Doe', 'ATTENDANT', 23521, TO_DATE('03-15-1988', 'MM-DD-YYYY'), 'jd88@gmail.com', NULL, NULL, NULL, NULL);
+INSERT INTO Employee VALUES (4, 'Dave Cantlon', 'ATTENDANT', 35000, TO_DATE('03-01-1975', 'MM-DD-YYYY'), 'dcantlon@gmail.com', 1, NULL, NULL, NULL);
+INSERT INTO Employee VALUES (5, 'Patricia Davis', 'ATTENDANT', 35000, TO_DATE('09-12-1986', 'MM-DD-YYYY'), 'patriciad@gmail.com', 3, NULL, NULL, NULL);
+INSERT INTO Employee VALUES (6, 'Maria Mayer', 'CONDUCTOR', 55231, TO_DATE('10-16-1977', 'MM-DD-YYYY'), 'm77@terra.com', NULL, NULL, 4484763, TO_DATE('03-20-2000', 'MM-DD-YYYY'));
+INSERT INTO Employee VALUES (7, 'Margaret Mason', 'CONDUCTOR', 68772, TO_DATE('04-19-1981', 'MM-DD-YYYY'), 'margmason@gmail.com', NULL, NULL, 4484764, TO_DATE('03-20-2000', 'MM-DD-YYYY'));
+INSERT INTO Employee VALUES (8, 'Cindy Read', 'CONDUCTOR', 42000, TO_DATE('12-07-1988', 'MM-DD-YYYY'), 'cindyread223@gmail.com', NULL, NULL, 4484765, TO_DATE('03-20-2000', 'MM-DD-YYYY'));
+INSERT INTO Employee VALUES (9, 'Devon Ross', 'CONDUCTOR', 48750, TO_DATE('08-14-1988', 'MM-DD-YYYY'), 'dross@canadarail.com', NULL, NULL, 4484766, TO_DATE('03-20-2000', 'MM-DD-YYYY'));
+INSERT INTO Employee VALUES (10, 'Ed Biel', 'CONDUCTOR', 55231, TO_DATE('11-27-1992', 'MM-DD-YYYY'), 'ed.biel@terra.com', NULL, NULL, 4484767, TO_DATE('03-20-2000', 'MM-DD-YYYY'));
+INSERT INTO Employee VALUES (11, 'Sebastien Gonzales', 'MECHANIC', 64124, TO_DATE('12-12-1978', 'MM-DD-YYYY'), 'sg@canadarail.com', NULL, TO_DATE('10-12-2023', 'MM-DD-YYYY'), 6589, NULL);
+INSERT INTO Employee VALUES (12, 'Mark Charette', 'MECHANIC', 60229, TO_DATE('03-02-1989', 'MM-DD-YYYY'), 'mc7209@gmail.com', NULL, TO_DATE('10-12-2023', 'MM-DD-YYYY'), 6594, NULL);
+INSERT INTO Employee VALUES (13, 'Hannah Crawford', 'MECHANIC', 30500, TO_DATE('03-15-1996', 'MM-DD-YYYY'), 'hcrawford4@gmail.com', NULL, TO_DATE('08-01-2026', 'MM-DD-YYYY'), 7992, NULL);
+INSERT INTO Employee VALUES (14, 'Alonzo Bradbury', 'MECHANIC', 68000, TO_DATE('12-12-1978', 'MM-DD-YYYY'), 'alonzob@canadarail.com', NULL, TO_DATE('10-14-2022', 'MM-DD-YYYY'), 5204, NULL);
+INSERT INTO Employee VALUES (15, 'Sergei Washington', 'MECHANIC', 49672, TO_DATE('10-16-1977', 'MM-DD-YYYY'), 'sergei995@terra.com', NULL, TO_DATE('08-01-2026', 'MM-DD-YYYY'), 7993, NULL);
+INSERT INTO Employee VALUES (16, 'Rebecca Clifton', NULL, 85000, TO_DATE('06-28-1993', 'MM-DD-YYYY'), 'rebecca.c@canadarail.com', NULL, NULL, NULL, NULL);
+INSERT INTO Employee VALUES (17, 'Ross Harold', NULL, 23800, TO_DATE('02-18-2000', 'MM-DD-YYYY'), 'ross.harold@gmail.com', NULL, NULL, NULL, NULL);
 
 INSERT INTO Train_Extra VALUES ('BOMBARDIER-TI-31', 2007, 200, 4);
 INSERT INTO Train_Extra VALUES ('CRRC-C8-19', 2019, 650, 10);
@@ -152,17 +164,17 @@ INSERT INTO Manages VALUES (3, 13);
 INSERT INTO Manages VALUES (4, 14);
 INSERT INTO Manages VALUES (5, 15);
 
-INSERT INTO Drives VALUES (1, 15);
-INSERT INTO Drives VALUES (2, 11);
-INSERT INTO Drives VALUES (3, 13);
-INSERT INTO Drives VALUES (4, 12);
-INSERT INTO Drives VALUES (5, 14);
+INSERT INTO Drives VALUES (6, 15);
+INSERT INTO Drives VALUES (7, 11);
+INSERT INTO Drives VALUES (8, 13);
+INSERT INTO Drives VALUES (9, 12);
+INSERT INTO Drives VALUES (10, 14);
 
-INSERT INTO Maintains VALUES (1, 11);
-INSERT INTO Maintains VALUES (2, 12);
-INSERT INTO Maintains VALUES (3, 13);
-INSERT INTO Maintains VALUES (4, 14);
-INSERT INTO Maintains VALUES (5, 15);
+INSERT INTO Maintains VALUES (11, 11);
+INSERT INTO Maintains VALUES (12, 12);
+INSERT INTO Maintains VALUES (13, 13);
+INSERT INTO Maintains VALUES (14, 14);
+INSERT INTO Maintains VALUES (15, 15);
 
 INSERT INTO Passenger VALUES (63, 'John Smith');
 INSERT INTO Passenger VALUES (64, 'Mark Smith');
