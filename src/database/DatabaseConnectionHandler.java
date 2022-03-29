@@ -370,7 +370,7 @@ public class DatabaseConnectionHandler {
             StringBuilder sb = new StringBuilder();
 
             while(rs.next()) {
-                sb.append("Train " + rs.getInt("trainID") + ": " + rs.getInt("numEmployees") + ", ");
+                sb.append("Train " + rs.getInt("trainID") + ": " + rs.getInt("numEmployees") + "\n");
             }
 
             rs.close();
