@@ -13,4 +13,8 @@ public class Trip {
     public String joinQuery(String passengerId) {
         return dbHandler.getCargo(Integer.parseInt(passengerId));
     }
+
+    public String divisionQuery() {
+        return dbHandler.getRoutesThatGoThroughAllStations();
+    }
 }

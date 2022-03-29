@@ -366,4 +366,21 @@ public class DatabaseConnectionHandler {
             return null;
         }
     }
+
+    public String getRoutesThatGoThroughAllStations() {
+        String query = "SELECT routeID FROM GoesThrough G WHERE NOT EXISTS ((SELECT S.name FROM Station S) MINUS (SELECT S1.name FROM Station S1 WHERE G.stationName = S1.name))";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while(rs.next()) {
+                sb.append("Route ID: " + rs.getInt("routeId") + "\n");
+            }
+            return sb.toString();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
 }
