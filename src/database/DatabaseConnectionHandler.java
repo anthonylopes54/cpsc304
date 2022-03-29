@@ -347,7 +347,7 @@ public class DatabaseConnectionHandler {
             ResultSet rs = ps.executeQuery();
             StringBuilder sb = new StringBuilder();
 
-            while(!rs.next()) {
+            while(rs.next()) {
                 sb.append(
                         "Name: " +
                                 rs.getString("name") +
