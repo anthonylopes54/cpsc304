@@ -7,16 +7,9 @@ public class Trip {
     private static DatabaseConnectionHandler dbHandler;
     private int uniqueID = 1000;
 
-    public static void main(String[] args) {
-        dbHandler = new DatabaseConnectionHandler();
-        dbHandler.login("ORA_ALOPES02", "a24280836");
-        dbHandler.addPassenger(1000, "Jerry");
-        dbHandler.deletePassenger(1000);
-        System.out.println(dbHandler.getTrainsByModel("BOMBARDIER-TI-31"));
-    }
-
     public Trip() {
         dbHandler = new DatabaseConnectionHandler();
+        dbHandler.login("ORA_ALOPES02", "a24280836");
     }
 
     public String projectionQuery() {
