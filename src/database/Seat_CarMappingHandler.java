@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Seat_CarMappingHandler implements ModelHandler{
 
     @Override
-    public void Insert(Model model, Connection connection) {
+    public void insert(Model model, Connection connection) {
         Seat_CarMapping seat_carMapping = (Seat_CarMapping) model;
         String query = "INSERT INTO Seat_CarMapping VALUES (?,?)";
         try {
