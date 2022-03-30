@@ -1,22 +1,15 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
-
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Trip {
     private static DatabaseConnectionHandler dbHandler;
     private int uniqueID = 1000;
 
-    public static void main(String[] args) {
-        dbHandler = new DatabaseConnectionHandler();
-//        dbHandler.login("ORA_ALOPES02", "a24280836");
-        dbHandler.login("ORA_AARCI", "a17487497");
-    }
-
     public Trip() {
         dbHandler = new DatabaseConnectionHandler();
+        dbHandler.login("ORA_ALOPES02", "a24280836");
     }
 
     public String projectionQuery() {

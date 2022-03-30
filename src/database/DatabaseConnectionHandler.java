@@ -370,16 +370,14 @@ public class DatabaseConnectionHandler {
             StringBuilder sb = new StringBuilder();
 
             while(rs.next()) {
-                String statement = rs.getString("trainId") + ", ";
-                sb.append(statement);
+                sb.append("trainID: " + rs.getString("trainId") + "\n");
             }
 
             rs.close();
             ps.close();
-            String result = "Train Ids: " + sb;
             // It's a subset to remove the last + ", "
 
-            return result.substring(0, result.length()-2);
+            return sb.toString();
 
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
@@ -466,9 +464,9 @@ public class DatabaseConnectionHandler {
                 sb.append(
                         "Name: " +
                                 rs.getString("name") +
-                                "| Cargo ID: " +
+                                " | Cargo ID: " +
                                 rs.getInt("cargoID") +
-                                "| Weight: " +
+                                " | Weight: " +
                                 rs.getString("weight") +
                                 "\n"
                 );
@@ -509,13 +507,13 @@ public class DatabaseConnectionHandler {
             while (rs.next()) {
                 sb.append("empID: " +
                         rs.getInt("empID") +
-                        "| name: " +
+                        " | name: " +
                         rs.getString("name") +
-                        "| specialization: " +
+                        " | specialization: " +
                         rs.getString("specialization") +
-                        "| salary: " +
+                        " | salary: " +
                         rs.getInt("salary") +
-                        "| email: " +
+                        " | email: " +
                         rs.getString("email") +
                         "\n");
             }
