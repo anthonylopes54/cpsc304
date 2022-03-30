@@ -3,7 +3,7 @@ import controller.Trip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLOutput;
+import java.util.Date;
 
 public class gui extends JFrame {
     private JTabbedPane tabbedPane1;
@@ -16,7 +16,7 @@ public class gui extends JFrame {
     private JTextField insertionTextField;
     private JButton addPassengerButton;
     private JPanel mainPanel;
-    private JTextField textField2;
+    private JTextField deletionField;
     private JTextField dateTextField;
     private JTextField licenseNumberTextField;
     private JTextField certificationIssueDateTextField;
@@ -28,7 +28,7 @@ public class gui extends JFrame {
     private JTextField empIdTextField;
     private JButton updateButton;
     private JButton joinButton;
-    private JTextField textField3;
+    private JTextField joinTextField;
     private JButton queryButton;
     private JLabel nestedAggregationAnswer;
     private JButton executeQueryButton;
@@ -36,10 +36,17 @@ public class gui extends JFrame {
     private JButton executeQueryButton1;
     private JPanel Projection;
     private JPanel Selection;
-    private JComboBox Models;
+    private JComboBox trainDropDownModels;
     private JButton executeQueryButton2;
     private JButton getEmployeesButton;
     private JLabel queryCompleted;
+    private JLabel deleteQuery;
+    private JTextArea joinTextArea;
+    private JTextArea nestedTextArea;
+    private JTextArea projectionTextArea;
+    private JTextArea selectionTextArea;
+    private JTextField nameTextField;
+    private JLabel joinResultField;
 
     public gui () {
         Trip trip = new Trip();
@@ -53,10 +60,74 @@ public class gui extends JFrame {
         addPassengerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Hey im being touched");
                 String name = insertionTextField.getText();
                 queryCompleted.setText("Added " + name + " to the database");
                 trip.insertQuery(name);
+
+            }
+        });
+
+        executeQueryButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int passengerID = Integer.parseInt(deletionField.getText());
+                trip.deleteQuery(passengerID);
+                deleteQuery.setText("Passenger was deleted");
+
+            }
+        });
+
+        joinButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String passengerID = (joinTextField.getText());
+                joinTextArea.setText(trip.joinQuery(passengerID));
+            }
+        });
+        queryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nestedTextArea.setText(trip.nestedAggregationQuery());
+                System.out.println(trip.nestedAggregationQuery());
+            }
+        });
+        executeQueryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                divisionQueryAnswer.setText(trip.divisionQuery());
+            }
+        });
+
+        getEmployeesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: Didn't have projection query in my version
+                //projectionTextArea.setText(trip.projectionQuery());
+            }
+        });
+        executeQueryButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectionTextArea.setText(trip.selectionQuery(trainDropDownModels.getSelectedItem().toString()));
+            }
+        });
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date change = new Date(dateTextField.getText());
+                Date expr = new Date(licenseExpiryDateTextField.getText());
+                Date epor = new Date(certificationIssueDateTextField.getText());
+
+                trip.updateQuery(   Integer.parseInt(empIdTextField.getText()),
+                                    nameTextField.getText(),
+                                    change,
+                                    emailTextField.getText(),
+                                    Integer.parseInt(salaryTextField.getText()),
+                                    specializationTextField.getText(),
+                                    Integer.parseInt(freightCarTextField.getText()),
+                                    expr,
+                                    Integer.parseInt(licenseNumberTextField.getText()),
+                                    epor);
 
             }
         });

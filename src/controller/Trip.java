@@ -8,15 +8,12 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Trip {
-    private DatabaseConnectionHandler dbHandler;
+    private static DatabaseConnectionHandler dbHandler;
     private int uniqueID = 2000;
-
-    public static void main(String[] args) {
-
-    }
 
     public Trip() {
         dbHandler = new DatabaseConnectionHandler();
+        dbHandler.login("ORA_ALOPES02", "a24280836");
     }
 
     public int aggregationQuery(int trainID, int routeID) {
