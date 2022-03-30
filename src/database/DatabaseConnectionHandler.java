@@ -431,9 +431,7 @@ public class DatabaseConnectionHandler {
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            System.out.println("before execution");
             ResultSet rs = ps.executeQuery();
-            System.out.println("after execution");
             StringBuilder sb = new StringBuilder();
 
             while(rs.next()) {
