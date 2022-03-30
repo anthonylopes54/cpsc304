@@ -402,7 +402,7 @@ public class DatabaseConnectionHandler {
 
     // returns the number of passengers on a particular train and route, specified by trainID and routeID
     public int getNumPassengers(int trainID, int routeID) {
-        String query = "SELECT COUNT(passengerID) AS numPassengers FROM Trip WHERE trainID = ? AND routeID = ?";
+        String query = "SELECT COUNT(DISTINCT passengerID) AS numPassengers FROM Trip WHERE trainID = ? AND routeID = ?";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -410,10 +410,13 @@ public class DatabaseConnectionHandler {
             ps.setInt(2, routeID);
 
             ResultSet rs = ps.executeQuery();
-            int res = rs.getInt("numPassengers");
+            int res = -1;
+            while(rs.next()) {
+                res = rs.getInt("numPassengers");
+            }
+
             rs.close();
             ps.close();
-
             return res;
 
         } catch (SQLException e) {
@@ -426,11 +429,13 @@ public class DatabaseConnectionHandler {
     // runs a hard-coded aggregation query with group by
     // returns a concatenated string of the number of employees by train: "Train x1: y1, Train x2: y2, ..., Train xn: yn"
     public String getNumEmployeesByTrain() {
-        String query = "WITH TrainEmployees AS (SELECT a.* FROM Manages a UNION SELECT b.* FROM Drives b UNION SELECT c.* FROM Maintains c) SELECT COUNT(DISTINCT empID) AS numEmployees FROM TrainEmployees GROUP BY trainID";
+        String query = "WITH TrainEmployees AS (SELECT a.* FROM Manages a UNION SELECT b.* FROM Drives b UNION SELECT c.* FROM Maintains c) SELECT trainID, COUNT(DISTINCT empID) AS numEmployees FROM TrainEmployees GROUP BY trainID";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
+            System.out.println("before execution");
             ResultSet rs = ps.executeQuery();
+            System.out.println("after execution");
             StringBuilder sb = new StringBuilder();
 
             while(rs.next()) {
@@ -450,6 +455,7 @@ public class DatabaseConnectionHandler {
 
     public String getCargo(int passengerId) {
         String query = "SELECT p.NAME, c.CARGOID, c.WEIGHT FROM PASSENGER p, CARGO_BELONGSTO c WHERE p.PASSENGERID = c.PASSENGERID AND p.PASSENGERID = ?";
+
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, passengerId);

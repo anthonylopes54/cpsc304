@@ -10,6 +10,7 @@ public class Trip {
     public static void main(String[] args) {
         dbHandler = new DatabaseConnectionHandler();
         dbHandler.login("ORA_ALOPES02", "a24280836");
+//        dbHandler.login("ORA_AARCI", "a17487497");
     }
 
     public Trip() {
