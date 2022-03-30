@@ -55,8 +55,8 @@ public class gui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Hey im being touched");
                 String name = insertionTextField.getText();
-                trip.insertQuery(name);
                 queryCompleted.setText("Added " + name + " to the database");
+                trip.insertQuery(name);
 
             }
         });
