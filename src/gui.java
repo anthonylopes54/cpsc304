@@ -1,4 +1,9 @@
+import controller.Trip;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 
 public class gui extends JFrame {
     private JTabbedPane tabbedPane1;
@@ -8,7 +13,7 @@ public class gui extends JFrame {
     private JPanel Join;
     private JPanel NestedAggregation;
     private JPanel Division;
-    private JTextField textField1;
+    private JTextField insertionTextField;
     private JButton addPassengerButton;
     private JPanel mainPanel;
     private JTextField textField2;
@@ -34,18 +39,33 @@ public class gui extends JFrame {
     private JComboBox Models;
     private JButton executeQueryButton2;
     private JButton getEmployeesButton;
+    private JLabel queryCompleted;
 
     public gui () {
+        Trip trip = new Trip();
+
         setContentPane(mainPanel);
         setTitle("Train Manager");
         setSize(800,600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
+        addPassengerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Hey im being touched");
+                String name = insertionTextField.getText();
+                trip.insertQuery(name);
+                queryCompleted.setText("Added " + name + " to the database");
+
+            }
+        });
     }
 
     public static void main(String[] args) {
         gui g = new gui();
 
     }
+
+
 }
