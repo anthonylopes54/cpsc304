@@ -1,6 +1,8 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Trip {
@@ -9,8 +11,8 @@ public class Trip {
 
     public static void main(String[] args) {
         dbHandler = new DatabaseConnectionHandler();
-        dbHandler.login("ORA_ALOPES02", "a24280836");
-//        dbHandler.login("ORA_AARCI", "a17487497");
+//        dbHandler.login("ORA_ALOPES02", "a24280836");
+        dbHandler.login("ORA_AARCI", "a17487497");
     }
 
     public Trip() {
@@ -38,9 +40,8 @@ public class Trip {
     }
 
     public void insertQuery(String name) {
-        //!TODO get Unique ID is just an int that increases everytime you call it
+        // get Unique ID is just an int that increases everytime you call it
         //this solution should be fine, the UID java class created alphanumerics and couldn't get rid of characters
-
         dbHandler.addPassenger(this.getUniqueID(), name);
 
     }
