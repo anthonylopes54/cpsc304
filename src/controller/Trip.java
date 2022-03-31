@@ -33,9 +33,8 @@ public class Trip {
     }
 
     public void insertQuery(String name) {
-        //!TODO get Unique ID is just an int that increases everytime you call it
-        //this solution should be fine, the UID java class created alphanumerics and couldn't get rid of characters
-
+        // get Unique ID is just an int that increases everytime you call it
+        // this solution should be fine, the UID java class created alphanumerics and couldn't get rid of characters
         dbHandler.addPassenger(this.getUniqueID(), name);
 
     }
