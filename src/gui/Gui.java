@@ -48,6 +48,11 @@ public class Gui extends JFrame {
     private JTextArea projectionTextArea;
     private JTextArea selectionTextArea;
     private JTextField nameTextField;
+    private JPanel Aggregation;
+    private JTextField aggregationTextFieldTrain;
+    private JTextField aggregationTextFieldRoute;
+    private JLabel aggregationResultText;
+    private JButton aggergationButton;
     private JLabel joinResultField;
 
     public Gui() {
@@ -132,12 +137,22 @@ public class Gui extends JFrame {
 
             }
         });
+        aggergationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggregationResultText.setText(Integer.toString
+                        (trip.aggregationQuery(
+                            Integer.parseInt(aggregationTextFieldTrain.getText()),
+                            Integer.parseInt(aggregationTextFieldRoute.getText())
+                )));
+            }
+        });
     }
 
     public static void main(String[] args) {
         Gui g = new Gui();
-
     }
+
 
 
 }
