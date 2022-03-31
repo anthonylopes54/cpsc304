@@ -120,20 +120,20 @@ public class Gui extends JFrame {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Date change = new Date(dateTextField.getText());
-                Date expr = new Date(licenseExpiryDateTextField.getText());
-                Date epor = new Date(certificationIssueDateTextField.getText());
+                java.sql.Date change = java.sql.Date.valueOf(dateTextField.getText());
+                java.sql.Date expr = java.sql.Date.valueOf(licenseExpiryDateTextField.getText());
+                java.sql.Date epor = java.sql.Date.valueOf(certificationIssueDateTextField.getText());
 
                 trip.updateQuery(   Integer.parseInt(empIdTextField.getText()),
-                                    nameTextField.getText(),
-                                    change,
-                                    emailTextField.getText(),
-                                    Integer.parseInt(salaryTextField.getText()),
-                                    specializationTextField.getText(),
-                                    Integer.parseInt(freightCarTextField.getText()),
-                                    expr,
-                                    Integer.parseInt(licenseNumberTextField.getText()),
-                                    epor);
+                        nameTextField.getText(),
+                        change,
+                        emailTextField.getText(),
+                        Integer.parseInt(salaryTextField.getText()),
+                        specializationTextField.getText(),
+                        Integer.parseInt(freightCarTextField.getText()),
+                        expr,
+                        Integer.parseInt(licenseNumberTextField.getText()),
+                        epor);
 
             }
         });
