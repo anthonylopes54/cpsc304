@@ -45,7 +45,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void delete(Model model, int id) {
+    public void delete(Model model) {
         switch (model.type) {
             case DRIVES -> {
                 DrivesHandler drivesHandler = new DrivesHandler();
@@ -258,7 +258,7 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
-    public void update(Model model, int id) {
+    public void update(Model model) {
         switch (model.type) {
             case DRIVES -> {
                 DrivesHandler drivesHandler = new DrivesHandler();
@@ -370,16 +370,14 @@ public class DatabaseConnectionHandler {
             StringBuilder sb = new StringBuilder();
 
             while(rs.next()) {
-                String statement = rs.getString("trainId") + ", ";
-                sb.append(statement);
+                sb.append("trainID: " + rs.getString("trainId") + "\n");
             }
 
             rs.close();
             ps.close();
-            String result = "Train Ids: " + sb;
             // It's a subset to remove the last + ", "
 
-            return result.substring(0, result.length()-2);
+            return sb.toString();
 
         } catch (SQLException e) {
             System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
@@ -402,7 +400,7 @@ public class DatabaseConnectionHandler {
 
     // returns the number of passengers on a particular train and route, specified by trainID and routeID
     public int getNumPassengers(int trainID, int routeID) {
-        String query = "SELECT COUNT(passengerID) AS numPassengers FROM Trip WHERE trainID = ? AND routeID = ?";
+        String query = "SELECT COUNT(DISTINCT passengerID) AS numPassengers FROM Trip WHERE trainID = ? AND routeID = ?";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -410,10 +408,13 @@ public class DatabaseConnectionHandler {
             ps.setInt(2, routeID);
 
             ResultSet rs = ps.executeQuery();
-            int res = rs.getInt("numPassengers");
+            int res = -1;
+            while(rs.next()) {
+                res = rs.getInt("numPassengers");
+            }
+
             rs.close();
             ps.close();
-
             return res;
 
         } catch (SQLException e) {
@@ -426,7 +427,7 @@ public class DatabaseConnectionHandler {
     // runs a hard-coded aggregation query with group by
     // returns a concatenated string of the number of employees by train: "Train x1: y1, Train x2: y2, ..., Train xn: yn"
     public String getNumEmployeesByTrain() {
-        String query = "WITH TrainEmployees AS (SELECT a.* FROM Manages a UNION SELECT b.* FROM Drives b UNION SELECT c.* FROM Maintains c) SELECT COUNT(DISTINCT empID) AS numEmployees FROM TrainEmployees GROUP BY trainID";
+        String query = "WITH TrainEmployees AS (SELECT a.* FROM Manages a UNION SELECT b.* FROM Drives b UNION SELECT c.* FROM Maintains c) SELECT trainID, COUNT(DISTINCT empID) AS numEmployees FROM TrainEmployees GROUP BY trainID";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -450,6 +451,7 @@ public class DatabaseConnectionHandler {
 
     public String getCargo(int passengerId) {
         String query = "SELECT p.NAME, c.CARGOID, c.WEIGHT FROM PASSENGER p, CARGO_BELONGSTO c WHERE p.PASSENGERID = c.PASSENGERID AND p.PASSENGERID = ?";
+
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, passengerId);
@@ -460,9 +462,9 @@ public class DatabaseConnectionHandler {
                 sb.append(
                         "Name: " +
                                 rs.getString("name") +
-                                "| Cargo ID: " +
+                                " | Cargo ID: " +
                                 rs.getInt("cargoID") +
-                                "| Weight: " +
+                                " | Weight: " +
                                 rs.getString("weight") +
                                 "\n"
                 );
@@ -485,6 +487,33 @@ public class DatabaseConnectionHandler {
 
             while(rs.next()) {
                 sb.append("Route ID: " + rs.getInt("routeId") + "\n");
+            }
+            return sb.toString();
+        } catch (SQLException e) {
+            System.out.println(Constants.EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String getEmployeeProjection() {
+        String query = "SELECT empID, name, specialization, salary, email FROM Employee";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            StringBuilder sb = new StringBuilder();
+
+            while (rs.next()) {
+                sb.append("empID: " +
+                        rs.getInt("empID") +
+                        " | name: " +
+                        rs.getString("name") +
+                        " | specialization: " +
+                        rs.getString("specialization") +
+                        " | salary: " +
+                        rs.getInt("salary") +
+                        " | email: " +
+                        rs.getString("email") +
+                        "\n");
             }
             return sb.toString();
         } catch (SQLException e) {

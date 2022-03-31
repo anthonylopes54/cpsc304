@@ -36,7 +36,7 @@ public class Seat_MainHandler implements ModelHandler{
     @Override
     public void update(Model model, Connection connection) {
         Seat_Main seat_main = (Seat_Main) model;
-        String query = "UPDATE Seat_Main SET class = ?, WHERE seatNum = ? AND trainID = ?";
+        String query = "UPDATE Seat_Main SET class = ? WHERE seatNum = ? AND trainID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
 
@@ -91,7 +91,7 @@ public class Seat_MainHandler implements ModelHandler{
     @Override
     public Model[] getInfo(Connection connection) {
         ArrayList<Seat_Main> res = new ArrayList<>();
-        String query = "SELECT * FROM Seat_car";
+        String query = "SELECT * FROM Seat_CarMapping";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet resultSet = ps.executeQuery();

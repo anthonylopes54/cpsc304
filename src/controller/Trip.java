@@ -1,22 +1,19 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
-
-import java.sql.ResultSet;
 import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Trip {
-    private DatabaseConnectionHandler dbHandler;
-    private int uniqueID = 2000;
-
-    public static void main(String[] args) {
-
-    }
+    private static DatabaseConnectionHandler dbHandler;
+    private int uniqueID = 1000;
 
     public Trip() {
         dbHandler = new DatabaseConnectionHandler();
+        dbHandler.login("ORA_ALOPES02", "a24280836");
+    }
+
+    public String projectionQuery() {
+        return dbHandler.getEmployeeProjection();
     }
 
     public int aggregationQuery(int trainID, int routeID) {
@@ -36,9 +33,8 @@ public class Trip {
     }
 
     public void insertQuery(String name) {
-        //!TODO get Unique ID is just an int that increases everytime you call it
-        //this solution should be fine, the UID java class created alphanumerics and couldn't get rid of characters
-
+        // get Unique ID is just an int that increases everytime you call it
+        // this solution should be fine, the UID java class created alphanumerics and couldn't get rid of characters
         dbHandler.addPassenger(this.getUniqueID(), name);
 
     }
