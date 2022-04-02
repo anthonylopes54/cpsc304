@@ -479,7 +479,7 @@ public class DatabaseConnectionHandler {
     }
 
     public String getRoutesThatGoThroughAllStations() {
-        String query = "SELECT routeID FROM GoesThrough G WHERE NOT EXISTS ((SELECT S.name FROM Station S) MINUS (SELECT S1.name FROM Station S1 WHERE G.stationName = S1.name))";
+        String query = "SELECT DISTINCT routeID FROM GoesThrough G WHERE NOT EXISTS ((SELECT S.name FROM Station S) MINUS (SELECT G1.STATIONNAME FROM GoesThrough G1 WHERE G1.ROUTEID = G.ROUTEID))";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
